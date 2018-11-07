@@ -1,7 +1,8 @@
 package devices;
 
 public class DoorEngine implements DeviceInterface {
-	
+
+	public final static int TYPE = 3;
 	private boolean doorOpen;
 	
 	public DoorEngine(boolean doorOpen)

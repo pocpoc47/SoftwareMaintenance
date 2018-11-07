@@ -3,6 +3,7 @@ package sensors;
 import java.util.Date;
 
 public class MovementSensor implements Sensor {
+	public static int TYPE = 2;
 	
 	private Date lastMovementDetectedTime; //min
 	

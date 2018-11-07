@@ -1,7 +1,7 @@
 package devices;
 
 public class Alarm implements DeviceInterface{
-
+	public final static int TYPE = 1;
 	private boolean turnedOn;
 	
 	public Alarm(boolean turnedOn)

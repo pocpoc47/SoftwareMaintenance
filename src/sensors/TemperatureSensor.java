@@ -1,6 +1,7 @@
 package sensors;
 
 public class TemperatureSensor implements Sensor {
+	public static int TYPE = 3;
 	
 	private double temp;
 	

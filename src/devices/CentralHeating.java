@@ -1,6 +1,7 @@
 package devices;
 
 public class CentralHeating implements DeviceInterface{
+	public final static int TYPE = 2;
 	private boolean turnedOn;
 	
 	public CentralHeating(boolean turnedOn) {

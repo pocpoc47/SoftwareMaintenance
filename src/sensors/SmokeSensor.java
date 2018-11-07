@@ -2,6 +2,7 @@ package sensors;
 
 public class SmokeSensor implements Sensor {
 
+	public static int TYPE = 1;
 	private boolean smokeDetected = false;
 	
 	public void setSmokeDetected(boolean smokeDetected) {

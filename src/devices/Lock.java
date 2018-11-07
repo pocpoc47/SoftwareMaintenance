@@ -2,6 +2,7 @@ package devices;
 
 public class Lock implements DeviceInterface {
 
+	public final static int TYPE = 5;
 	private boolean locked;
 	public Lock(boolean locked)
 	{

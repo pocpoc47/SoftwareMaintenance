@@ -2,6 +2,7 @@ package devices;
 
 public class Light implements DeviceInterface {
 
+	public final static int TYPE = 4;
 	private boolean turnedOn;
 	
 	public Light(boolean isTurnedOn)
