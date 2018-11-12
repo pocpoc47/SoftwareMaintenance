@@ -76,7 +76,7 @@ public class Main {
 		System.out.println("Plus de mouvement : are doors closed ?\n");
 		((LockingControl)lockArray.get(0)).areDoorsLocked();
 		System.out.println("GarageDoor : "+lockList.get(0).isLocked());
-		System.out.println("GarageDoor : "+lockList.get(1).isLocked());
+		System.out.println("EntranceDoor : "+lockList.get(1).isLocked());
 		
 		
 		
