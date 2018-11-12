@@ -1,11 +1,19 @@
 package devices;
 
+import home.Kitchen;
+import home.Room;
+
 public class CentralHeating implements DeviceInterface{
 	public final static int TYPE = 2;
 	private boolean turnedOn;
+	private Room room;
 	
 	public CentralHeating(boolean turnedOn) {
 		this.turnedOn = turnedOn;
+	}
+	public CentralHeating(boolean turnedOn, Kitchen kitch) {
+		this.turnedOn = turnedOn;
+		room = kitch;
 	}
 
 	public boolean isTurnedOn() {
@@ -29,6 +37,18 @@ public class CentralHeating implements DeviceInterface{
 	@Override
 	public void toggle() {
 		this.turnedOn = !this.turnedOn;
+	}
+
+	public Room getRoom() {
+		return room;
+	}
+
+	public void setRoom(Room room) {
+		this.room = room;
+	}
+
+	public static int getType() {
+		return TYPE;
 	}
 	
 }

@@ -2,24 +2,18 @@ package home;
 
 import devices.DeviceInterface;
 
-public class Door implements DeviceInterface {
+public class Door {
 	
-	@Override
-	public void turnOn() {
-		// TODO Auto-generated method stub
-		
+	private Room room;
+	
+	public Door(Room room)
+	{
+		this.room = room;
+	}
+	public Room getRoom()
+	{
+		return room;
 	}
 
-	@Override
-	public void turnOff() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void toggle() {
-		// TODO Auto-generated method stub
-		
-	}
 	
 }

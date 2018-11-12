@@ -1,12 +1,23 @@
 package sensors;
 
-public class SmokeSensor implements Sensor {
+import java.util.ArrayList;
 
+import actuators.Observer;
+import dto.Dto;
+import home.Room;
+
+public class SmokeSensor extends Sensor {
 	public static int TYPE = 1;
 	private boolean smokeDetected = false;
 	
+	public SmokeSensor(ArrayList<Observer> obsList, Room room) {
+		super(obsList, room);
+	}
+	
 	public void setSmokeDetected(boolean smokeDetected) {
 		this.smokeDetected = smokeDetected;
+		if(smokeDetected)
+			super.notifyObservers(new Dto(TYPE, Dto.SMOKE_DETECTION, smokeDetected, super.getRoom()));
 	}
 	
 	public boolean isSmokeDetected() {
@@ -19,10 +30,5 @@ public class SmokeSensor implements Sensor {
 		//We could implement some mecanism to randomize smoke.
 	}
 
-	@Override
-	public void update() {
-		// TODO Auto-generated method stub
-		
-	}
 
 }
