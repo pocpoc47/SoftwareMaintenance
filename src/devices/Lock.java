@@ -1,15 +1,20 @@
 package devices;
 
-public class Lock implements DeviceInterface {
+import home.Door;
 
+public class Lock implements DeviceInterface {
 	public final static int TYPE = 5;
+	
 	private boolean locked;
-	public Lock(boolean locked)
+	private Door door;
+	
+	public Lock(boolean locked, Door door)
 	{
 		this.locked = locked;
+		this.door = door;
 	}
 	
-	public boolean getLocked()
+	public boolean isLocked()
 	{
 		return locked;
 	}
@@ -28,6 +33,11 @@ public class Lock implements DeviceInterface {
 	@Override
 	public void toggle() {
 		this.locked = !this.locked;
+	}
+	
+	public Door getDoor()
+	{
+		return door;
 	}
 
 }

@@ -2,27 +2,50 @@ package actuators;
 
 import java.util.ArrayList;
 
+import devices.Alarm;
 import devices.Light;
+import dto.Dto;
 import home.Hall;
 import home.Room;
 
-public class AlarmControl extends Actuator {
+public class AlarmControl implements Observer {
 	
-	private ArrayList<Room> roomList;
+	private ArrayList<Alarm> alarmList;
 	
-	public AlarmControl(ArrayList<Room>rL)
+	public AlarmControl(ArrayList<Alarm> alarmList)
 	{
-		this.roomList = rL;
+		this.alarmList = alarmList;
 	}
-	public void isEverytingFine()
+	public void turnSmokeAlarmOn(Room room, Boolean isSmokeDetected)
 	{
-		for (Room r : roomList)
-		{
-				if( r.getSmokeSensor().isSmokeDetected())
-				{
-					if(((Hall)roomList.get(0)).getAlarm() != null) //Hall is always the first element and the only room to have the alarm.
-						((Hall)roomList.get(0)).getAlarm().turnOn();
-				}
+		for (Alarm alarm : alarmList)
+		{	
+			if(alarm.getRoom().equals(room))
+				//isSmokeDetected?alarm.turnOn():alarm.turnOff();
+				if(isSmokeDetected)
+					alarm.turnOn();
+				else
+					alarm.turnOff();
 		}
+	}
+	
+	public void turnSmokeAlarmOff(Room room)
+	{
+		for (Alarm alarm : alarmList)
+		{
+			if(alarm.getRoom().equals(room))	
+				alarm.turnOff();
+		}
+	}
+
+	@Override
+	public void update(Dto dto) {
+		switch(dto.getAction())
+		{
+			case Dto.SMOKE_DETECTION:
+				turnSmokeAlarmOn(dto.getRoom(),(boolean)dto.getData());
+				break;
+		}
+		
 	}
 }

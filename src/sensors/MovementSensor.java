@@ -1,26 +1,22 @@
 package sensors;
 
+import java.util.ArrayList;
 import java.util.Date;
 
-public class MovementSensor implements Sensor {
+import actuators.Observer;
+import dto.Dto;
+import home.Room;
+
+public class MovementSensor extends Sensor {
 	public static int TYPE = 2;
 	
-	private Date lastMovementDetectedTime; //min
-	
-	public MovementSensor(Date date) {
-		lastMovementDetectedTime = date;
+	public MovementSensor(Date date, Room room, ArrayList<Observer> obsList) {
+		super(obsList,room);
 	}
 
-	public Date getLastMovementDetectedTime() {
-		return lastMovementDetectedTime;
-	}
 	public void setLastMovementDetectedTime(Date lastMovementDetectedTime) {
-		this.lastMovementDetectedTime = lastMovementDetectedTime;
+		super.notifyObservers(new Dto(TYPE,Dto.MOV_TIME_DETECT,((Object)lastMovementDetectedTime), super.getRoom())); //1 = LastDetectedTime
 	}
-	@Override
-	public void update() {
-		// TODO Auto-generated method stub
-		
-	}
+	
 
 }

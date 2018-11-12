@@ -1,20 +1,23 @@
 package sensors;
 
-public class TemperatureSensor implements Sensor {
+import java.util.ArrayList;
+
+import actuators.Observer;
+import dto.Dto;
+import home.Room;
+
+public class TemperatureSensor extends Sensor {
 	public static int TYPE = 3;
 	
 	private double temp;
 	
-	public TemperatureSensor() {
+	public TemperatureSensor(ArrayList<Observer> obsList, Room room) {
+		super(obsList,room);
 		this.temp = 15.3;
 	}
-	public TemperatureSensor(double temp) {
+	public TemperatureSensor(double temp, Room room, ArrayList<Observer> obsList) {
+		super(obsList, room);
 		this.temp = temp;
-	}
-
-	@Override
-	public void update() {
-		// TODO Auto-generated method stub
 	}
 	
 	public double getTemp()
@@ -24,6 +27,7 @@ public class TemperatureSensor implements Sensor {
 	public void setTemp(double t)
 	{
 		temp = t;
+		super.notifyObservers(new Dto(TYPE,Dto.TEMP_CHANGE,((Object)t), super.getRoom()));
 	}
 
 }

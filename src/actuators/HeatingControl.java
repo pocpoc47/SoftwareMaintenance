@@ -2,28 +2,61 @@ package actuators;
 
 import java.util.ArrayList;
 
-import home.*;
+import devices.CentralHeating;
+import dto.Dto;
 
-public class HeatingControl extends Actuator {
+public class HeatingControl implements Observer {
 	
 	private double desiredTemp;
-	private ArrayList<Room> roomList;
+	private double actualTemp;
+	private ArrayList <CentralHeating> heaters;
 	
-	public HeatingControl(ArrayList<Room>rL)
+	public HeatingControl(ArrayList<CentralHeating> heaters, double desiredTemp)
 	{
-		this.roomList = rL;
+		this.heaters = heaters;
+		this.desiredTemp = desiredTemp;
 	}
-	
-	public void KeepHouseTemp()
+
+	public void keepHouseTemp()
 	{
-		if(roomList.get(2).getTemperatureSensor().getTemp() < desiredTemp)
+		if(actualTemp<desiredTemp)
 		{
-			roomList.get(2).getCentralHeating().turnOn();
-			//roomList.get(2).getTemperatureSensor().setTemp(desiredTemp);
+			for(CentralHeating h : heaters)
+			{
+				h.turnOn();
+			}
 		}
 		else
 		{
-			roomList.get(2).getCentralHeating().turnOff();
+			for(CentralHeating h : heaters)
+			{
+				h.turnOff();
+			}
 		}
 	}
+
+	@Override
+	public void update(Dto dto) {
+		switch(dto.getAction()) {
+			case Dto.TEMP_CHANGE:
+				actualTemp = (double)dto.getData();
+				keepHouseTemp();
+		}
+		
+	}
+	
+	public double getDesiredTemp() {
+		return desiredTemp;
+	}
+
+	public void setDesiredTemp(double desiredTemp) {
+		this.desiredTemp = desiredTemp;
+	}
+
+	public double getActualTemp()
+	{
+		return actualTemp;
+	}
+
+	
 }
