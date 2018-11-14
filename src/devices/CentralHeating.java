@@ -11,9 +11,9 @@ public class CentralHeating implements DeviceInterface{
 	public CentralHeating(boolean turnedOn) {
 		this.turnedOn = turnedOn;
 	}
-	public CentralHeating(boolean turnedOn, Kitchen kitch) {
+	public CentralHeating(boolean turnedOn, Room room) {
 		this.turnedOn = turnedOn;
-		room = kitch;
+		this.room = room;
 	}
 
 	public boolean isTurnedOn() {
