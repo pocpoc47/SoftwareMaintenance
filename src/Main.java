@@ -1,28 +1,30 @@
 import devices.*;
 import home.*;
+import interpreter.CommandInterpreter;
 import sensors.*;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 
+import com.beust.jcommander.JCommander;
+
 import actuators.*;
+import asg.cliche.Command;
+import asg.cliche.ShellFactory;
 
 public class Main {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		
+
 		//creation of rooms
 		ArrayList<Room> roomList = new ArrayList();
 		Room kitchen = new Kitchen();
 		Room hall = new Hall();
 		Room garage = new Garage();
-		
 		Door entranceDoor = new EntranceDoor(hall);
 		Door garageDoor = new GarageDoor(garage);
-		
-		
 		roomList.add(kitchen);
 		roomList.add(hall);
 		roomList.add(garage);
@@ -32,7 +34,6 @@ public class Main {
 		ArrayList<Light> lightList = new ArrayList<Light>();
 		ArrayList<Lock> lockList = new ArrayList<Lock>();
 		ArrayList<Alarm> alarmList = new ArrayList<Alarm>();
-		
 		heatingList.add(new CentralHeating(false, (Kitchen)kitchen));
 		lightList.add(new Light(true, kitchen));
 		lockList.add(new Lock(false,entranceDoor));
@@ -47,10 +48,14 @@ public class Main {
 		mergingList.addAll(lockArray);
 		
 		//Creation of sensors
+		ArrayList<MovementSensor> movSensList = new ArrayList<MovementSensor>();
 		TemperatureSensor tempSens = new TemperatureSensor(10,kitchen, tempArray);
 		MovementSensor movSensKitchen = new MovementSensor(new Date(), kitchen, mergingList);
 		MovementSensor movSensHall = new MovementSensor(new Date(), hall, mergingList);
 		MovementSensor movSensGarage = new MovementSensor(new Date(), garage, mergingList);
+		movSensList.add(movSensGarage);
+		movSensList.add(movSensHall);
+		movSensList.add(movSensKitchen);
 		
 		//Test
 		//Il fait 10 degrés dans la maison et nous en voulont 15
@@ -78,83 +83,14 @@ public class Main {
 		System.out.println("GarageDoor : "+lockList.get(0).isLocked());
 		System.out.println("EntranceDoor : "+lockList.get(1).isLocked());
 		
-		
-		
-		
-		//HALL
-		/*Alarm alarm = new Alarm(false);
-		DoorEngine doorEngineEntrance = new DoorEngine(false);
-		Lock lockEntrance = new Lock(false);
-		EntranceDoor entranceDoor = new EntranceDoor(lockEntrance, doorEngineEntrance);
-		Light entranceLight = new Light(true);
-		ArrayList<Light> hLL = new ArrayList();
-		hLL.add(entranceLight);
-		SmokeSensor sS = new SmokeSensor();
-		TemperatureSensor tSHall = new TemperatureSensor(15.3);
-		MovementSensor mS = new MovementSensor(new Date(System.currentTimeMillis()-1000000));
-		Hall hall = new Hall(alarm, entranceDoor, hLL, sS, mS,cH, tSHall);
-		roomList.add(hall);
-		
-		//GARAGE
-		DoorEngine doorEngineGarage = new DoorEngine(false);
-		Lock lockGarage = new Lock(false);
-		GarageDoor garageDoor = new GarageDoor(lockGarage, doorEngineGarage);
-		Light garageLight = new Light(true);
-		ArrayList<Light> gLL = new ArrayList();
-		gLL.add(garageLight);
-		SmokeSensor sSGarage = new SmokeSensor();
-		MovementSensor mSGarage = new MovementSensor(new Date(System.currentTimeMillis()-1000000));
-		TemperatureSensor tSGarage = new TemperatureSensor(15.3);
-		Garage garage = new Garage(garageDoor,gLL,sSGarage,mSGarage,cH,tSGarage);
-		roomList.add(garage);
-		
-		//Kitchen
-		Light kitchenLight = new Light(true);
-		ArrayList<Light> kLL = new ArrayList();
-		kLL.add(kitchenLight);
-		SmokeSensor sSKitchen = new SmokeSensor();
-		sSKitchen.setSmokeDetected(true);
-		MovementSensor mSKitchen = new MovementSensor(new Date(System.currentTimeMillis()-1000000));
-		TemperatureSensor tempSKitchen = new TemperatureSensor(15.3);
-		Kitchen kitchen = new Kitchen(kLL, sSKitchen, mSKitchen, tempSKitchen, cH);
-		roomList.add(kitchen);
-		
-
-		
-		//Creation of Actuators
-		AlarmControl alarmControl = new AlarmControl(roomList);
-		LightControl lightControl = new LightControl(roomList);
-		HeatingControl heatingControl = new HeatingControl(roomList);
-		LockingControl lockingControl = new LockingControl(roomList);
-		
-		System.out.println("Debut de simulation\n");
-		System.out.println("Les portes du garage et de l'entrée sont ouvertes,");
-		System.out.println("Les lampes cuisines , hall et garage sont allumées");
-		System.out.println("Alarme déclanchée ? "+hall.getAlarm().isAlarmOn());
-		System.out.println("La température est de "+kitchen.getTemperatureSensor().getTemp()+" dégré(s)");
-		
-		lightControl.autoShutdown();
-		heatingControl.KeepHouseTemp();
-		lockingControl.areDoorsLocked();
-		alarmControl.isEverytingFine();
-		
-		System.out.println("Porte d'entrée 'is locked' ? : "+hall.getEntranceDoor().getLock().getLocked());
-		System.out.println("Porte de garage 'is locked' ? : "+garage.getGarageDoor().getLock().getLocked());
-		System.out.println("Lampe allumées ?\n ");
-		for (Room r : roomList)
-		{
-			
-			for( Light l : r.getLights())
-			{
-				if(l.isTurnedOn())
-				{
-					System.out.println("il reste une lampe allumée \n");
-				}
-			}
+		try {
+			ShellFactory.createConsoleShell("hello", "", new CommandInterpreter(roomList, tempSens, movSensList)).commandLoop();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		System.out.println("Alarme déclanchée ? "+hall.getAlarm().isAlarmOn());
-		System.out.println("Simulation terminée\n");
-		*/
 	}
-
 }
+
+
+
