@@ -21,30 +21,54 @@ public class LockingControl implements Observer {
 		movRoomMap = new HashMap<Room,Date>();
 	}
 	
-	public void areDoorsLocked()
+	public void lockDoors()
 	{
-		for(Lock lock : lockList)
+		if(lockList!=null)
 		{
-			Date lastMov = movRoomMap.get(lock.getDoor().getRoom());
-			if(!lock.isLocked())
+			for(Lock lock : lockList)
 			{
-				if(System.currentTimeMillis() - lastMov.getTime() >= 15*60*1000) //15min inactivity
+				Date lastMov = movRoomMap.get(lock.getDoor().getRoom());
+				if(!lock.isLocked())
 				{
-					lock.turnOn();
+					if(System.currentTimeMillis() - lastMov.getTime() >= 15*60*1000) //15min inactivity
+					{
+						lock.turnOn();
+					}
+					else
+					{
+						if(lastMov == null) System.out.println("No records about the movement in this room\n");
+					}
 				}
 			}
 		}
+		else
+		{
+			System.out.print("No lock detected\n");
+		}
+		
 	}
 	
 	private void toggleLock(Door door)
 	{
-		for(Lock lock : lockList)
+		boolean lockFound = false;
+		if(lockList != null)
 		{
-			if(lock.getDoor().equals(door))
-				lock.toggle();
+			for(Lock lock : lockList)
+			{
+				if(lock.getDoor().equals(door))
+				{
+					lock.toggle();
+					lockFound = true;
+				}
+			}
 		}
+		else
+		{
+			System.out.println("No lock referenced");
+		}
+		
 	}
-	
+	public
 	private void updateMovMap(Date lastMov, Room room)
 	{
 			movRoomMap.put(room, lastMov);

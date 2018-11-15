@@ -21,12 +21,56 @@ public class LightControl implements Observer {
 	}
 	public void autoShutDown()
 	{
-		for (Light l : lightList)
+		if(lightList != null)
 		{
-			if((System.currentTimeMillis() - movRoomMap.get(l.getRoom()).getTime() >= 2*60*1000)) // No more movement for 2 min.
+			for (Light l : lightList)
 			{
-				l.turnOff();
-			}	
+				Date roomDate = movRoomMap.get(l.getRoom());
+				if(roomDate != null)
+				{
+					if((System.currentTimeMillis() - roomDate.getTime() >= 2*60*1000)) // No more movement for 2 min.
+					{
+						l.turnOff();
+					}	
+				}
+				else
+				{
+					System.out.println("No records of movement found for this room");
+				}
+					
+			}
+		}
+		else
+		{
+			System.out.println("No light are referenced\n");
+		}
+		
+	}
+	
+	public void turnLights(boolean lightOn)
+	{
+		if(lightList != null)
+		{
+			for(Light l : lightList)
+			{
+				//(lightOn)? l.turnOn() : l.turnOff();
+			}
+		}
+	}
+	public void turnLights(boolean lightOn, Room room)
+	{
+		boolean foundRoom = false;
+		if(lightList != null)
+		{
+			for(Light l : lightList)
+			{
+				if(l.getRoom().equals(room))
+				{
+					//((lightOn)?l.turnOn():l.turnOff());
+					foundRoom = true;
+				}	
+			}
+			if(!foundRoom) System.out.println("No light belonging to this room\");\n");
 		}
 	}
 	

@@ -16,26 +16,33 @@ public class AlarmControl implements Observer {
 	{
 		this.alarmList = alarmList;
 	}
-	public void turnSmokeAlarmOn(Room room, Boolean isSmokeDetected)
+	public void setAlarmFireRing(Room room, Boolean isSmokeDetected)
 	{
-		for (Alarm alarm : alarmList)
-		{	
-			if(alarm.getRoom().equals(room))
-				//isSmokeDetected?alarm.turnOn():alarm.turnOff();
-				if(isSmokeDetected)
-					alarm.turnOn();
-				else
-					alarm.turnOff();
+		Boolean roomFound = false;
+		if(alarmList != null)
+		{
+			for (Alarm alarm : alarmList)
+			{
+				if(alarm.getRoom().equals(room))
+					
+					if(isSmokeDetected)
+						alarm.turnOn();
+					else
+						alarm.turnOff();
+			}
+			if(!roomFound)System.out.println("No alarm found for this room\n");
 		}
+		else
+		{
+			System.out.println("No alarm are referenced\n");
+		}	
 	}
-	
-	public void turnSmokeAlarmOff(Room room)
+	public void setAlarm(boolean armed)
 	{
 		for (Alarm alarm : alarmList)
 		{
-			if(alarm.getRoom().equals(room))	
-				alarm.turnOff();
-		}
+			alarm.setArmed(armed);
+		}	
 	}
 
 	@Override
@@ -43,9 +50,9 @@ public class AlarmControl implements Observer {
 		switch(dto.getAction())
 		{
 			case Dto.SMOKE_DETECTION:
-				turnSmokeAlarmOn(dto.getRoom(),(boolean)dto.getData());
+				
+				setAlarmFireRing(dto.getRoom(),(boolean)dto.getData());
 				break;
 		}
-		
 	}
 }

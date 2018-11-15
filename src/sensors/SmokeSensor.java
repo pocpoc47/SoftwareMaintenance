@@ -8,16 +8,16 @@ import home.Room;
 
 public class SmokeSensor extends Sensor {
 	public static int TYPE = 1;
-	private boolean smokeDetected = false;
+	private boolean smokeDetected;
 	
 	public SmokeSensor(ArrayList<Observer> obsList, Room room) {
 		super(obsList, room);
+		smokeDetected = false;
 	}
 	
 	public void setSmokeDetected(boolean smokeDetected) {
 		this.smokeDetected = smokeDetected;
-		if(smokeDetected)
-			super.notifyObservers(new Dto(TYPE, Dto.SMOKE_DETECTION, smokeDetected, super.getRoom()));
+		super.notifyObservers(new Dto(TYPE, Dto.SMOKE_DETECTION, smokeDetected, super.getRoom()));
 	}
 	
 	public boolean isSmokeDetected() {
