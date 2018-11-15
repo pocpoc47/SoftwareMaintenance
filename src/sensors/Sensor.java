@@ -7,8 +7,10 @@ import dto.Dto;
 import home.Room;
 
 public abstract class Sensor {
+	
 	private ArrayList<Observer> observerList;
 	private Room room;
+	
 	public Sensor(ArrayList<Observer> obsList, Room room)
 	{
 		this.observerList = obsList;
