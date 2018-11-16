@@ -10,7 +10,6 @@ import home.Room;
 
 public class TemperatureSensor extends Sensor {
 	public static int TYPE = 3;
-	
 	private double temp;
 	
 	public TemperatureSensor(ArrayList<Observer> obsList, Room room) {

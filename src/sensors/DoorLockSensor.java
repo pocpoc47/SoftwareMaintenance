@@ -24,7 +24,7 @@ public class DoorLockSensor extends Sensor {
 		return door;
 	}
 
-	public void setToggle() {
+	public void setToggle(boolean doorOpen) {
 		this.doorOpen = doorOpen;
 		super.notifyObservers(new Dto(3, Dto.DOOR_EVENT, door, getRoom()));
 	}
