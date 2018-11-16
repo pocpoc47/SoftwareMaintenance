@@ -19,7 +19,7 @@ public class LightControl implements Observer {
 		this.lightList = lightList;
 		movRoomMap = new HashMap<Room,Date>();
 	}
-	public void autoShutDown()
+	public boolean autoShutDown()
 	{
 		if(lightList != null)
 		{
@@ -36,28 +36,36 @@ public class LightControl implements Observer {
 				else
 				{
 					System.out.println("No records of movement found for this room");
+					return false;
 				}
-					
 			}
 		}
 		else
 		{
 			System.out.println("No light are referenced\n");
+			return false;
 		}
+		return true;
 		
 	}
 	
-	public void turnLights(boolean lightOn)
+	public boolean turnLights(boolean lightOn)
 	{
 		if(lightList != null)
 		{
 			for(Light l : lightList)
 			{
-				//(lightOn)? l.turnOn() : l.turnOff();
+				if(lightOn)l.turnOn();
+				else l.turnOff();
 			}
 		}
+		else {
+			System.out.println("No light belonging to this room\");\n");
+			return false;
+		}
+		return true;
 	}
-	public void turnLights(boolean lightOn, Room room)
+	public boolean turnLights(boolean lightOn, Room room)
 	{
 		boolean foundRoom = false;
 		if(lightList != null)
@@ -66,12 +74,23 @@ public class LightControl implements Observer {
 			{
 				if(l.getRoom().equals(room))
 				{
-					//((lightOn)?l.turnOn():l.turnOff());
+					if(lightOn)l.turnOn();
+					else l.turnOff();
 					foundRoom = true;
 				}	
 			}
-			if(!foundRoom) System.out.println("No light belonging to this room\");\n");
+			if(!foundRoom) 
+			{
+				System.out.println("No light belonging to this room\");\n");
+				return false;
+			}
 		}
+		else
+		{
+			System.out.println("No light recensed for this house");
+			return false;
+		}
+		return true;
 	}
 	
 	private void updateMovMap(Date lastMov, Room room)

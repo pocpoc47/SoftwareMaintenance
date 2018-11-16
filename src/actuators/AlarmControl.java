@@ -16,7 +16,7 @@ public class AlarmControl implements Observer {
 	{
 		this.alarmList = alarmList;
 	}
-	public void setAlarmFireRing(Room room, Boolean isSmokeDetected)
+	public boolean setAlarmFireRing(Room room, Boolean isSmokeDetected)
 	{
 		Boolean roomFound = false;
 		if(alarmList != null)
@@ -30,19 +30,35 @@ public class AlarmControl implements Observer {
 					else
 						alarm.turnOff();
 			}
-			if(!roomFound)System.out.println("No alarm found for this room\n");
+			if(!roomFound)
+			{
+				System.out.println("No alarm found for this room\n");
+				return false;
+			}
+			return true;
 		}
 		else
 		{
 			System.out.println("No alarm are referenced\n");
+			return false;
 		}	
 	}
-	public void setAlarm(boolean armed)
+	public boolean setAlarm(boolean armed)
 	{
-		for (Alarm alarm : alarmList)
+		if(alarmList != null)
 		{
-			alarm.setArmed(armed);
-		}	
+			for (Alarm alarm : alarmList)
+			{
+				alarm.setArmed(armed);
+			}	
+			return true;
+		}
+		else
+		{
+			System.out.println("No alarm referenced");
+			return false;
+		}
+		
 	}
 
 	@Override

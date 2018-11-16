@@ -18,7 +18,7 @@ public class HeatingControl implements Observer {
 		this.desiredTemp = desiredTemp;
 	}
 
-	public void keepHouseTemp()
+	public boolean keepHouseTemp()
 	{
 		if(heaters!=null)
 		{
@@ -36,9 +36,11 @@ public class HeatingControl implements Observer {
 					h.turnOff();
 				}
 			}
+			return true;
 		}
 		else {
 			System.out.println("No heaters\n");
+			return false;
 		}
 		
 	}

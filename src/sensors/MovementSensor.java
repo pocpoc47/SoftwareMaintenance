@@ -5,6 +5,8 @@ import java.util.Date;
 
 import actuators.Observer;
 import dto.Dto;
+import exceptions.SearchException;
+import exceptions.VariabilityException;
 import home.Room;
 
 public class MovementSensor extends Sensor {
@@ -14,7 +16,7 @@ public class MovementSensor extends Sensor {
 		super(obsList,room);
 	}
 
-	public void setLastMovementDetectedTime(Date lastMovementDetectedTime) {
+	public void setLastMovementDetectedTime(Date lastMovementDetectedTime)  {
 		super.notifyObservers(new Dto(TYPE,Dto.MOV_TIME_DETECT,((Object)lastMovementDetectedTime), super.getRoom())); //1 = LastDetectedTime
 	}
 	

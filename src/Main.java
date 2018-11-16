@@ -1,4 +1,6 @@
 import devices.*;
+import exceptions.SearchException;
+import exceptions.VariabilityException;
 import home.*;
 import interpreter.CommandInterpreter;
 import sensors.*;
@@ -18,8 +20,10 @@ public class Main {
 
 	public static void main(String[] args) {
 
+		
 		//creation of rooms
 		ArrayList<Room> roomList = new ArrayList();
+		ArrayList<Door> doorList = new ArrayList();
 		Room kitchen = new Kitchen();
 		Room hall = new Hall();
 		Room garage = new Garage();
@@ -28,6 +32,8 @@ public class Main {
 		roomList.add(kitchen);
 		roomList.add(hall);
 		roomList.add(garage);
+		doorList.add(entranceDoor);
+		doorList.add(garageDoor);
 		
 		//Creation of devices
 		ArrayList<CentralHeating> heatingList = new ArrayList<CentralHeating>();
@@ -97,12 +103,10 @@ public class Main {
 		System.out.println("Alarme déclanchée? "+alarmList.get(0).isAlarmOn());
 		smokeSens.setSmokeDetected(false);
 		System.out.println("Feu éteint,alarme déclanchée? "+alarmList.get(0).isAlarmOn());
-		
-		
-		
 		try {
-			ShellFactory.createConsoleShell("hello", "", new CommandInterpreter(roomList, tempSens, movSensList, mergingList)).commandLoop();
-		} catch (IOException e) {
+			ShellFactory.createConsoleShell("hello", "", new CommandInterpreter(roomList, tempSens, movSensList, mergingList, doorList)).commandLoop();
+		}
+		catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
