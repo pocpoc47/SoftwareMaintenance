@@ -6,4 +6,5 @@ import devices.*;
 import sensors.*;
 
 public class Garage extends Room {
+
 }

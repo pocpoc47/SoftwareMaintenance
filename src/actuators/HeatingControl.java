@@ -59,8 +59,9 @@ public class HeatingControl implements Observer {
 		return desiredTemp;
 	}
 
-	public void setDesiredTemp(double desiredTemp) {
+	public boolean setDesiredTemp(double desiredTemp) {
 		this.desiredTemp = desiredTemp;
+		return true;
 	}
 
 	public double getActualTemp()

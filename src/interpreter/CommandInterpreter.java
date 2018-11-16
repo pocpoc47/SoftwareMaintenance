@@ -26,32 +26,45 @@ public class CommandInterpreter {
 	public CommandInterpreter(ArrayList<Room> roomList,  ArrayList<Observer> actuatorList,ArrayList<Door> doorList)
 	{
 		this.roomList = roomList;
-
 		this.actuatorList = actuatorList;
 		this.doorList = doorList;
+	}
+	@Command
+	public String printHelp()
+	{
+		StringBuilder b  = new StringBuilder();
+		for(int i = 0; i < roomList.size(); i++)
+		{
+			b.append(i+" - Room: "+roomList.get(i).getClass().getSimpleName()+"\n");
+		}
+		for(int i = 0; i < doorList.size(); i++)
+		{
+			b.append(i+ " - "+doorList.get(i).getDoorName()+" in room: "+doorList.get(i).getRoom().getClass().getSimpleName()+"\n");
+		}
+		return b.toString();
+		
 	}
 	
 	//Hardcoded array since actuators won't vary, their lists could be empty.
 	@Command
 	public String changeMode(int mode)
 	{
-		Boolean everythingWentWell = null;
 		switch(mode)
 		{
 			case GO_SLEEP:
-				((LightControl) actuatorList.get(0)).autoShutDown();
-				((LockingControl) actuatorList.get(1)).lockDoors();
-				((HeatingControl) actuatorList.get(2)).setDesiredTemp(19);
-				((AlarmControl) actuatorList.get(3)).setAlarm(true);
-				if(everythingWentWell == null || everythingWentWell == false)
+				if(((LightControl) actuatorList.get(0)).autoShutDown() &&
+				((LockingControl) actuatorList.get(1)).lockDoors() &&
+				((HeatingControl) actuatorList.get(2)).setDesiredTemp(19) &&
+				((AlarmControl) actuatorList.get(3)).setAlarm(true))
+					return "Sleep Mode Enabled\n";
+				else
 					return "Check the error above.\n";
-				return "Sleep Mode Enabled\n";
 			case WAKE_UP:
-				((HeatingControl) actuatorList.get(2)).setDesiredTemp(21);
-				((AlarmControl) actuatorList.get(3)).setAlarm(false);
-				if(everythingWentWell == null || everythingWentWell == false)
-					return "Check the error above.\n";
-				return "Wake Mode Enabled\n";
+				if(((HeatingControl) actuatorList.get(2)).setDesiredTemp(21)&&
+				((AlarmControl) actuatorList.get(3)).setAlarm(false))
+				return "Wake Up Mode Enabled\n";
+			else
+				return "Check the error above.\n";
 				
 		}
 		return "Incorrect Mode";
@@ -60,18 +73,12 @@ public class CommandInterpreter {
 	@Command
 	public String armAlarm()
 	{
-		if(((AlarmControl) actuatorList.get(4)).setAlarm(true))
-		return "the alarm is now armed\\n";
-		else
-			return "Please check the error above.\\n";
+		return ((AlarmControl) actuatorList.get(4)).setAlarm(true) ? "the alarm is now armed\n" : "Please check the error above.\n";
 	}
 	@Command
 	public String disarmAlarm()
 	{
-		if(((AlarmControl) actuatorList.get(4)).setAlarm(false))
-		return "the alarm is now disarmed ";
-		else
-			return "Please check the error above.\n";
+		return ((AlarmControl) actuatorList.get(4)).setAlarm(false) ? "the alarm is now disarmed\n " : "Please check the error above.\n";
 	}
 	@Command
 	public String setLight(boolean lightOn)
@@ -100,7 +107,7 @@ public class CommandInterpreter {
 	}
 	
 	@Command
-	public String setGarageDoor(boolean open, int door)
+	public String setDoor(boolean open, int door)
 	{
 		boolean behaveOk = false;
 		if(open)
@@ -108,23 +115,9 @@ public class CommandInterpreter {
 		else
 			behaveOk = ((LockingControl) actuatorList.get(1)).lockDoor(doorList.get(door));
 		if(behaveOk)
-		return "Garage door is now"+((open)?"opened\n":"closed\n");
+		return "Door is now"+((open)?"opened\n":"closed\n");
 		else
 			return "Please check the error above\n";
-	}
-	
-	@Command
-	public String setHallDoor(boolean open, int door) 
-	{
-		boolean behaveOk = false;
-		if(open)
-			behaveOk = ((LockingControl) actuatorList.get(1)).unlockDoor(doorList.get(door));
-		else
-			behaveOk = ((LockingControl) actuatorList.get(1)).lockDoor(doorList.get(door));
-		if(behaveOk)
-		return "Hall door is now"+((open)?"opened\n":"closed\n");
-		else
-			return "Please check the error above.\n";
 	}
 	
 	@Command
