@@ -12,37 +12,47 @@ import sensors.MovementSensor;
 import sensors.TemperatureSensor;
 import actuators.*;
 
+//One improvement for next release : 
+//We should add a string label to the door, to the room and pass the from the main to the interpreter so we can list them.
 public class CommandInterpreter {
 	
 	private ArrayList<Room> roomList;
-	private TemperatureSensor tempSens;
-	private ArrayList<MovementSensor> movSensList;
 	private ArrayList<Observer> actuatorList;
 	private ArrayList<Door> doorList;
 	
 	public static final int GO_SLEEP = 1;
+	public static final int WAKE_UP = 2;
 	
-	public CommandInterpreter(ArrayList<Room> roomList, TemperatureSensor tempSens,
-	ArrayList<MovementSensor> movSensList, ArrayList<Observer> actuatorList,ArrayList<Door> doorList)
+	public CommandInterpreter(ArrayList<Room> roomList,  ArrayList<Observer> actuatorList,ArrayList<Door> doorList)
 	{
 		this.roomList = roomList;
-		this.tempSens = tempSens;
-		this.movSensList = movSensList;
+
 		this.actuatorList = actuatorList;
 		this.doorList = doorList;
 	}
 	
+	//Hardcoded array since actuators won't vary, their lists could be empty.
 	@Command
 	public String changeMode(int mode)
 	{
+		Boolean everythingWentWell = null;
 		switch(mode)
 		{
 			case GO_SLEEP:
 				((LightControl) actuatorList.get(0)).autoShutDown();
 				((LockingControl) actuatorList.get(1)).lockDoors();
 				((HeatingControl) actuatorList.get(2)).setDesiredTemp(19);
-				((AlarmControl) actuatorList.get(4)).setAlarm(true);
-				return "Sleep Mode Enabled";
+				((AlarmControl) actuatorList.get(3)).setAlarm(true);
+				if(everythingWentWell == null || everythingWentWell == false)
+					return "Check the error above.\n";
+				return "Sleep Mode Enabled\n";
+			case WAKE_UP:
+				((HeatingControl) actuatorList.get(2)).setDesiredTemp(21);
+				((AlarmControl) actuatorList.get(3)).setAlarm(false);
+				if(everythingWentWell == null || everythingWentWell == false)
+					return "Check the error above.\n";
+				return "Wake Mode Enabled\n";
+				
 		}
 		return "Incorrect Mode";
 		
@@ -51,9 +61,9 @@ public class CommandInterpreter {
 	public String armAlarm()
 	{
 		if(((AlarmControl) actuatorList.get(4)).setAlarm(true))
-		return "the alarm is now armed ";
+		return "the alarm is now armed\\n";
 		else
-			return "Please check the error above.";
+			return "Please check the error above.\\n";
 	}
 	@Command
 	public String disarmAlarm()
@@ -61,15 +71,15 @@ public class CommandInterpreter {
 		if(((AlarmControl) actuatorList.get(4)).setAlarm(false))
 		return "the alarm is now disarmed ";
 		else
-			return "Please check the error above.";
+			return "Please check the error above.\n";
 	}
 	@Command
 	public String setLight(boolean lightOn)
 	{
 		if(((LightControl) actuatorList.get(0)).turnLights(lightOn))
-		return "Lights are now "+((lightOn)?"enabled":"unabled");
+		return "Lights are now "+((lightOn)?"enabled\n":"unabled\n");
 		else
-			return "Please check the error above.";
+			return "Please check the error above.\n";
 	}
 	
 	@Command
@@ -82,9 +92,9 @@ public class CommandInterpreter {
 		else
 		{
 			if(((LightControl) actuatorList.get(0)).turnLights(lightOn, roomList.get(room)))
-			return "Lights are now "+((lightOn)?"enabled":"unabled")+"in the "+room;
+			return "Lights are now "+((lightOn)?"enabled":"unabled")+"in the "+room+"\n";
 			else
-				return "Please check the error above.";
+				return "Please check the error above.\n";
 		}
 		
 	}
@@ -98,9 +108,9 @@ public class CommandInterpreter {
 		else
 			behaveOk = ((LockingControl) actuatorList.get(1)).lockDoor(doorList.get(door));
 		if(behaveOk)
-		return "Garage door is now"+((open)?"opened":"closed");
+		return "Garage door is now"+((open)?"opened\n":"closed\n");
 		else
-			return "Please check the error above.";
+			return "Please check the error above\n";
 	}
 	
 	@Command
@@ -112,9 +122,9 @@ public class CommandInterpreter {
 		else
 			behaveOk = ((LockingControl) actuatorList.get(1)).lockDoor(doorList.get(door));
 		if(behaveOk)
-		return "Hall door is now"+((open)?"opened":"closed");
+		return "Hall door is now"+((open)?"opened\n":"closed\n");
 		else
-			return "Please check the error above.";
+			return "Please check the error above.\n";
 	}
 	
 	@Command

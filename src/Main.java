@@ -20,7 +20,6 @@ public class Main {
 
 	public static void main(String[] args) {
 
-		
 		//creation of rooms
 		ArrayList<Room> roomList = new ArrayList();
 		ArrayList<Door> doorList = new ArrayList();
@@ -104,10 +103,9 @@ public class Main {
 		smokeSens.setSmokeDetected(false);
 		System.out.println("Feu éteint,alarme déclanchée? "+alarmList.get(0).isAlarmOn());
 		try {
-			ShellFactory.createConsoleShell("hello", "", new CommandInterpreter(roomList, tempSens, movSensList, mergingList, doorList)).commandLoop();
+			ShellFactory.createConsoleShell("HouseInterpreter", "Use \'?list\' to look at commands.", new CommandInterpreter(roomList, mergingList, doorList)).commandLoop();
 		}
 		catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

@@ -1,10 +1,7 @@
 package sensors;
 
 import java.util.ArrayList;
-import java.util.Date;
-
 import actuators.Observer;
-import devices.DeviceInterface;
 import dto.Dto;
 import home.Door;
 import home.Room;

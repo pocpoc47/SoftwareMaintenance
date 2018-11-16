@@ -55,7 +55,7 @@ public class AlarmControl implements Observer {
 		}
 		else
 		{
-			System.out.println("No alarm referenced");
+			System.out.println("No alarm referenced\n");
 			return false;
 		}
 		

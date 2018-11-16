@@ -60,7 +60,7 @@ public class LightControl implements Observer {
 			}
 		}
 		else {
-			System.out.println("No light belonging to this room\");\n");
+			System.out.println("No light belonging to this room\n");
 			return false;
 		}
 		return true;
