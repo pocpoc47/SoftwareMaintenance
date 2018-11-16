@@ -3,6 +3,7 @@ package actuators;
 import java.util.ArrayList;
 
 import devices.Alarm;
+import devices.DeviceInterface;
 import devices.Light;
 import dto.Dto;
 import home.Hall;
@@ -60,7 +61,12 @@ public class AlarmControl implements Observer {
 		}
 		
 	}
-
+	
+	public void AddDevice(DeviceInterface device) {
+		if(this.alarmList == null) this.alarmList = new ArrayList<Alarm>();
+		this.alarmList.add((Alarm)device);
+	}
+	
 	@Override
 	public void update(Dto dto) {
 		switch(dto.getAction())

@@ -2,7 +2,9 @@ package actuators;
 
 import java.util.ArrayList;
 
+import devices.Alarm;
 import devices.CentralHeating;
+import devices.DeviceInterface;
 import dto.Dto;
 import exceptions.VariabilityException;
 
@@ -17,7 +19,10 @@ public class HeatingControl implements Observer {
 		this.heaters = heaters;
 		this.desiredTemp = desiredTemp;
 	}
-
+	public void AddDevice(DeviceInterface device) {
+		if(this.heaters == null) this.heaters = new ArrayList<CentralHeating>();
+		this.heaters.add((CentralHeating)device);
+	}
 	public boolean keepHouseTemp()
 	{
 		if(heaters!=null)

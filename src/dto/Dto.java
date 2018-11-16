@@ -20,7 +20,7 @@ public class Dto {
 	public static final int SMOKE_RESET = 31;
 	
 	//DoorEngine
-	public static final int DOOR_EVENT = 40;
+	public static final int LOCK_EVENT = 40;
 	
 	public Dto(int sensor, int action, Object obj, Room room)
 	{

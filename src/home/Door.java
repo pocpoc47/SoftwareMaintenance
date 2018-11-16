@@ -2,7 +2,7 @@ package home;
 
 import devices.DeviceInterface;
 
-public class Door {
+public class Dooor {
 	
 	private Room room;
 	private String doorName;
@@ -11,7 +11,6 @@ public class Door {
 	{
 		this.room = room;
 		this.doorName = doorName;
-		this.room.setDoor(this);
 	}
 	public Room getRoom()
 	{

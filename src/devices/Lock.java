@@ -1,17 +1,17 @@
 package devices;
 
-import home.Door;
+import home.Room;
 
 public class Lock implements DeviceInterface {
 	public final static int TYPE = 5;
 	
 	private boolean locked;
-	private Door door;
+	private Room room;
 	
-	public Lock(boolean locked, Door door)
+	public Lock(boolean locked, Room room)
 	{
 		this.locked = locked;
-		this.door = door;
+		this.room = room;
 	}
 	
 	public boolean isLocked()
@@ -35,9 +35,9 @@ public class Lock implements DeviceInterface {
 		this.locked = !this.locked;
 	}
 	
-	public Door getDoor()
+	public Room getRoom()
 	{
-		return door;
+		return room;
 	}
 
 }

@@ -5,6 +5,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import devices.Alarm;
+import devices.DeviceInterface;
 import devices.Light;
 import dto.Dto;
 import home.Room;
@@ -18,6 +20,10 @@ public class LightControl implements Observer {
 	{
 		this.lightList = lightList;
 		movRoomMap = new HashMap<Room,Date>();
+	}
+	public void AddDevice(DeviceInterface device) {
+		if(this.lightList == null) this.lightList = new ArrayList<Light>();
+		this.lightList.add((Light)device);
 	}
 	public boolean autoShutDown()
 	{

@@ -5,6 +5,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import devices.Alarm;
+import devices.DeviceInterface;
 import devices.Lock;
 import dto.Dto;
 import exceptions.LockingException;
@@ -23,14 +25,17 @@ public class LockingControl implements Observer {
 		this.lockList = lockList;
 		movRoomMap = new HashMap<Room,Date>();
 	}
-	
+	public void AddDevice(DeviceInterface device) {
+		if(this.lockList == null) this.lockList = new ArrayList<Lock>();
+		this.lockList.add((Lock)device);
+	}
 	public boolean lockDoors()
 	{
 		if(lockList!=null)
 		{
 			for(Lock lock : lockList)
 			{
-				Date lastMov = movRoomMap.get(lock.getDoor().getRoom());
+				Date lastMov = movRoomMap.get(lock.getRoom());
 				if(!lock.isLocked())
 				{
 					if(lastMov == null) {
@@ -56,87 +61,27 @@ public class LockingControl implements Observer {
 		
 	}
 	
-	private boolean toggleLock(Door door)
+	private boolean toggleLock(Lock lock)
 	{
-		boolean lockFound = false;
-		if(lockList != null)
-		{
-			for(Lock lock : lockList)
-			{
-				if(lock.getDoor().equals(door))
-				{
-					lock.toggle();
-					lockFound = true;
-				}
-			}
-			if(!lockFound) 
-			{
-				System.out.println("No lock found for this door");
-				return false;
-			}
-			
-		}
-		else
-		{
-			System.out.println("No lock referenced");
-			return false;
-		}
+		lock.toggle();
 		return true;
 	}
 	
-	public boolean lockDoor(Door door) 
+	public boolean lock(Lock lock) 
 	{
-		boolean lockFound = false;
-		if(lockList != null)
-		{
-			for(Lock lock : lockList)
-			{
-				if(lock.getDoor().equals(door))
-				{
-					if(lock.isLocked())lock.toggle();
-					else
-						System.out.println("The door is already locked");
-					lockFound = true;
-				}
-			}
-			if(!lockFound) {
-				System.out.println("No lock found for this door");
-				return false;
-			}
-		}
+		if(lock.isLocked())lock.toggle();
 		else
-		{
-			System.out.println("No lock referenced");
-			return false;
-		}
+			System.out.println("The lock is already locked");
+					
 		return true;
 	}
 	
-	public boolean unlockDoor(Door door) 
+	public boolean unlock(Lock lock) 
 	{
-		boolean lockFound = false;
-		if(lockList != null)
-		{
-			for(Lock lock : lockList)
-			{
-				if(lock.getDoor().equals(door))
-				{
-					if(!lock.isLocked())lock.toggle();
-					else
-						System.out.println("The door is already locked");
-					lockFound = true;
-				}
-			}
-			if(!lockFound) {
-				System.out.println("No lock found for this door");
-				return false;
-			}
-		}
+		if(lock.isLocked())lock.toggle();
 		else
-		{
-			System.out.println("No lock referenced");
-			return false;
-		}
+			System.out.println("The lock is already unlocked");
+					
 		return true;
 	}
 	
@@ -149,8 +94,8 @@ public class LockingControl implements Observer {
 	public void update(Dto dto)  {
 		switch(dto.getAction())
 		{
-			case Dto.DOOR_EVENT:
-				toggleLock((Door)dto.getData());
+			case Dto.LOCK_EVENT:
+				toggleLock((Lock)dto.getData());
 				break;
 			case Dto.MOV_TIME_DETECT:
 				updateMovMap((Date)dto.getData(),dto.getRoom());

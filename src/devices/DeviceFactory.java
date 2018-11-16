@@ -16,7 +16,7 @@ public class DeviceFactory {
 			device = new CentralHeating(false, room);
 			break;
 		case "LOCK":
-			device = new Lock(false, room.getDoor());
+			device = new Lock(false, room);
 			break;
 
 		default:
@@ -25,4 +25,7 @@ public class DeviceFactory {
 		}
 		return device;
 	}
+
+	
+	
 }

@@ -23,7 +23,7 @@ import home.Garage;
 import home.GarageDoor;
 import home.Room;
 import parametrization.Parameters;
-import sensors.DoorLockSensor;
+import sensors.LockSensor;
 import sensors.MovementSensor;
 import sensors.SmokeSensor;
 import sensors.TemperatureSensor;
@@ -47,7 +47,7 @@ public class Test {
 		garageSensors.add(SmokeSensor.TYPE);
 		garageSensors.add(MovementSensor.TYPE);
 		garageSensors.add(TemperatureSensor.TYPE);
-		garageDevices.add(DoorLockSensor.TYPE);
+		garageDevices.add(LockSensor.TYPE);
 		garageDevices.add(Lock.TYPE);
 		
 

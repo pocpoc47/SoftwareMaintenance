@@ -45,10 +45,11 @@ public class Main {
 		ArrayList<Light> lightList = new ArrayList<Light>();
 		ArrayList<Lock> lockList = new ArrayList<Lock>();
 		ArrayList<Alarm> alarmList = new ArrayList<Alarm>();
+		
 		heatingList.add((CentralHeating) deviceFact.getDevice("CENTRALHEATING", kitchen));
 		lightList.add((Light)deviceFact.getDevice("LIGHT", kitchen));
-		lockList.add((Lock)deviceFact.getDevice("LOCK", hall));
-		lockList.add((Lock)deviceFact.getDevice("LOCK", garage));
+		lockList.add((Lock)deviceFact.getDevice("LOCK", entranceDoor));
+		lockList.add((Lock)deviceFact.getDevice("LOCK", garageDoor));
 		alarmList.add((Alarm)deviceFact.getDevice("ALARM", kitchen));
 		
 		//Creation of actuators (array because actuator need 'observer' array
