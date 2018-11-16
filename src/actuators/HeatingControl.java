@@ -19,7 +19,7 @@ public class HeatingControl implements Observer {
 		this.heaters = heaters;
 		this.desiredTemp = desiredTemp;
 	}
-	public void AddDevice(DeviceInterface device) {
+	public void addDevice(DeviceInterface device) {
 		if(this.heaters == null) this.heaters = new ArrayList<CentralHeating>();
 		this.heaters.add((CentralHeating)device);
 	}

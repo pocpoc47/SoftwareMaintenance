@@ -2,15 +2,13 @@ package interpreter;
 
 import java.util.ArrayList;
 
+import actuators.AlarmControl;
+import actuators.HeatingControl;
+import actuators.LightControl;
+import actuators.LockingControl;
+import actuators.Observer;
 import asg.cliche.Command;
-import exceptions.LockingException;
-import exceptions.SearchException;
-import exceptions.VariabilityException;
-import home.Door;
 import home.Room;
-import sensors.MovementSensor;
-import sensors.TemperatureSensor;
-import actuators.*;
 
 //One improvement for next release : 
 //We should add a string label to the door, to the room and pass the from the main to the interpreter so we can list them.
@@ -18,16 +16,14 @@ public class CommandInterpreter {
 	
 	private ArrayList<Room> roomList;
 	private ArrayList<Observer> actuatorList;
-	private ArrayList<Door> doorList;
 	
 	public static final int GO_SLEEP = 1;
 	public static final int WAKE_UP = 2;
 	
-	public CommandInterpreter(ArrayList<Room> roomList,  ArrayList<Observer> actuatorList,ArrayList<Door> doorList)
+	public CommandInterpreter(ArrayList<Room> roomList,  ArrayList<Observer> actuatorList)
 	{
 		this.roomList = roomList;
 		this.actuatorList = actuatorList;
-		this.doorList = doorList;
 	}
 	@Command
 	public String printHelp()
@@ -36,10 +32,6 @@ public class CommandInterpreter {
 		for(int i = 0; i < roomList.size(); i++)
 		{
 			b.append(i+" - Room: "+roomList.get(i).getClass().getSimpleName()+"\n");
-		}
-		for(int i = 0; i < doorList.size(); i++)
-		{
-			b.append(i+ " - "+doorList.get(i).getDoorName()+" in room: "+doorList.get(i).getRoom().getClass().getSimpleName()+"\n");
 		}
 		return b.toString();
 		
@@ -107,13 +99,13 @@ public class CommandInterpreter {
 	}
 	
 	@Command
-	public String setDoor(boolean open, int door)
+	public String setLock(boolean open, int room)
 	{
 		boolean behaveOk = false;
 		if(open)
-			behaveOk = ((LockingControl) actuatorList.get(1)).unlockDoor(doorList.get(door));
+			behaveOk = ((LockingControl) actuatorList.get(1)).unlock(roomList.get(room));
 		else
-			behaveOk = ((LockingControl) actuatorList.get(1)).lockDoor(doorList.get(door));
+			behaveOk = ((LockingControl) actuatorList.get(1)).lock(roomList.get(room));
 		if(behaveOk)
 		return "Door is now"+((open)?"opened\n":"closed\n");
 		else

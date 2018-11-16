@@ -21,7 +21,7 @@ public class LightControl implements Observer {
 		this.lightList = lightList;
 		movRoomMap = new HashMap<Room,Date>();
 	}
-	public void AddDevice(DeviceInterface device) {
+	public void addDevice(DeviceInterface device) {
 		if(this.lightList == null) this.lightList = new ArrayList<Light>();
 		this.lightList.add((Light)device);
 	}
@@ -80,8 +80,7 @@ public class LightControl implements Observer {
 			{
 				if(l.getRoom().equals(room))
 				{
-					if(lightOn)l.turnOn();
-					else l.turnOff();
+					l.toggle();
 					foundRoom = true;
 				}	
 			}

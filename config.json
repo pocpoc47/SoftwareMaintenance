@@ -1,36 +1,35 @@
 {
-  "Garage": true,
-  "DiningRoom": false,
-  "Kitchen": true,
-  "Garden": false,
-  "Hall": true,
-  "LivingRoom": false,
-  "BedRoom": false,
-  "BathRoom": false,
-  "GarageSensors": [
-    1,
-    2,
-    3
+  "rooms": [
+    "HALL",
+    "KITCHEN",
+    "GARAGE"
   ],
-  "KitchenSensors": [
-    1,
-    3,
-    2
-  ],
-  "HallSensors": [
-    1,
-    3,
-    2
-  ],
-  "GarageDevices": [
-    3,
-    5
-  ],
-  "KitchenDevices": [
-    4
-  ],
-  "HallDevices": [
-    4,
-    1
-  ]
+  "roomDevices": {
+    "KITCHEN": [
+      "LIGHT",
+      "CENTRALHEATING",
+      "LOCK"
+    ],
+    "HALL": [
+      "LIGHT",
+      "LIGHT",
+      "ALARM",
+      "LOCK"
+    ]
+  },
+  "roomSensors": {
+    "KITCHEN": [
+      "MOVEMENT",
+      "SMOKE",
+      "TEMPERATURE",
+      "LOCK"
+    ],
+    "HALL": [
+      "MOVEMENT",
+      "SMOKE",
+      "TEMPERATURE",
+      "LOCK"
+    ]
+  },
+  "doorSensors": {}
 }

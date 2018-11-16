@@ -7,6 +7,7 @@ import java.util.Map;
 
 import devices.Alarm;
 import devices.DeviceInterface;
+import devices.Light;
 import devices.Lock;
 import dto.Dto;
 import exceptions.LockingException;
@@ -25,7 +26,7 @@ public class LockingControl implements Observer {
 		this.lockList = lockList;
 		movRoomMap = new HashMap<Room,Date>();
 	}
-	public void AddDevice(DeviceInterface device) {
+	public void addDevice(DeviceInterface device) {
 		if(this.lockList == null) this.lockList = new ArrayList<Lock>();
 		this.lockList.add((Lock)device);
 	}
@@ -61,27 +62,84 @@ public class LockingControl implements Observer {
 		
 	}
 	
-	private boolean toggleLock(Lock lock)
+	private boolean toggleLock(Room room)
 	{
-		lock.toggle();
+		boolean foundRoom = false;
+		if(lockList != null)
+		{
+			for(Lock l : lockList)
+			{
+				if(l.getRoom().equals(room))
+				{
+					l.toggle();
+					foundRoom = true;
+				}	
+			}
+			if(!foundRoom) 
+			{
+				System.out.println("No lock belonging to this room\");\n");
+				return false;
+			}
+		}
+		else
+		{
+			System.out.println("No lock recensed for this house");
+			return false;
+		}
 		return true;
 	}
 	
-	public boolean lock(Lock lock) 
+	public boolean lock(Room room) 
 	{
-		if(lock.isLocked())lock.toggle();
+		boolean foundRoom = false;
+		if(lockList != null)
+		{
+			for(Lock l : lockList)
+			{
+				if(l.getRoom().equals(room))
+				{
+					l.turnOn();
+					foundRoom = true;
+				}	
+			}
+			if(!foundRoom) 
+			{
+				System.out.println("No lock belonging to this room\");\n");
+				return false;
+			}
+		}
 		else
-			System.out.println("The lock is already locked");
-					
+		{
+			System.out.println("No lock recensed for this house");
+			return false;
+		}
 		return true;
 	}
 	
-	public boolean unlock(Lock lock) 
+	public boolean unlock(Room room) 
 	{
-		if(lock.isLocked())lock.toggle();
+		boolean foundRoom = false;
+		if(lockList != null)
+		{
+			for(Lock l : lockList)
+			{
+				if(l.getRoom().equals(room))
+				{
+					l.turnOff();
+					foundRoom = true;
+				}	
+			}
+			if(!foundRoom) 
+			{
+				System.out.println("No lock belonging to this room\");\n");
+				return false;
+			}
+		}
 		else
-			System.out.println("The lock is already unlocked");
-					
+		{
+			System.out.println("No lock recensed for this house");
+			return false;
+		}
 		return true;
 	}
 	
@@ -95,7 +153,7 @@ public class LockingControl implements Observer {
 		switch(dto.getAction())
 		{
 			case Dto.LOCK_EVENT:
-				toggleLock((Lock)dto.getData());
+				toggleLock((Room)dto.getRoom());
 				break;
 			case Dto.MOV_TIME_DETECT:
 				updateMovMap((Date)dto.getData(),dto.getRoom());

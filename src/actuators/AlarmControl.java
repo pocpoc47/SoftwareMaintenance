@@ -62,7 +62,7 @@ public class AlarmControl implements Observer {
 		
 	}
 	
-	public void AddDevice(DeviceInterface device) {
+	public void addDevice(DeviceInterface device) {
 		if(this.alarmList == null) this.alarmList = new ArrayList<Alarm>();
 		this.alarmList.add((Alarm)device);
 	}

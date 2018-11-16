@@ -22,7 +22,7 @@ public class SensorFactory {
 		//WHAT TO PUT IN THE LIST?
 		switch (type) {
 		case "LOCK":
-			sensor = new LockSensor(observerList, false, room, room.getLock());
+			sensor = new LockSensor(observerList, false, room);
 			break;
 		case "MOVEMENT":
 			sensor = new MovementSensor(Date.from(Instant.now()), room, observerList);
