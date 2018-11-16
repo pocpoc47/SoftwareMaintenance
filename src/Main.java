@@ -20,12 +20,18 @@ public class Main {
 
 	public static void main(String[] args) {
 
+		RoomFactory roomFact = new RoomFactory();
+		DeviceFactory deviceFact = new DeviceFactory();
+		SensorFactory sensorFact = new SensorFactory();
+		ControlFactory controlFact = new ControlFactory();
+		
 		//creation of rooms
 		ArrayList<Room> roomList = new ArrayList();
 		ArrayList<Door> doorList = new ArrayList();
-		Room kitchen = new Kitchen();
-		Room hall = new Hall();
-		Room garage = new Garage();
+		Room kitchen = roomFact.getRoom("KITCHEN");
+		Room hall = roomFact.getRoom("HALL");
+		Room garage = roomFact.getRoom("GARAGE");
+		
 		Door entranceDoor = new EntranceDoor(hall);
 		Door garageDoor = new GarageDoor(garage);
 		roomList.add(kitchen);
@@ -39,32 +45,37 @@ public class Main {
 		ArrayList<Light> lightList = new ArrayList<Light>();
 		ArrayList<Lock> lockList = new ArrayList<Lock>();
 		ArrayList<Alarm> alarmList = new ArrayList<Alarm>();
-		heatingList.add(new CentralHeating(false, (Kitchen)kitchen));
-		lightList.add(new Light(true, kitchen));
-		lockList.add(new Lock(false,entranceDoor));
-		lockList.add(new Lock(false,garageDoor));
-		alarmList.add(new Alarm(kitchen));
+		heatingList.add((CentralHeating) deviceFact.getDevice("CENTRALHEATING", kitchen));
+		lightList.add((Light)deviceFact.getDevice("LIGHT", kitchen));
+		lockList.add((Lock)deviceFact.getDevice("LOCK", hall));
+		lockList.add((Lock)deviceFact.getDevice("LOCK", garage));
+		alarmList.add((Alarm)deviceFact.getDevice("ALARM", kitchen));
 		
 		//Creation of actuators (array because actuator need 'observer' array
 		/*ArrayList<Observer> lightArray = new ArrayList<>(Arrays.asList(new LightControl(lightList)));
 		ArrayList<Observer> lockArray = new ArrayList<>(Arrays.asList(new LockingControl(lockList)));
 		ArrayList<Observer> tempArray = new ArrayList<>(Arrays.asList(new HeatingControl(heatingList,15)));
 		ArrayList<Observer> alarmArray = new ArrayList<>(Arrays.asList(new AlarmControl(alarmList)));*/
-		ArrayList<Observer> lightArray = new ArrayList<>(Arrays.asList(new LightControl(null)));
+		/*ArrayList<Observer> lightArray = new ArrayList<>(Arrays.asList(new LightControl(null)));
 		ArrayList<Observer> lockArray = new ArrayList<>(Arrays.asList(new LockingControl(null)));
 		ArrayList<Observer> tempArray = new ArrayList<>(Arrays.asList(new HeatingControl(null,15)));
 		ArrayList<Observer> alarmArray = new ArrayList<>(Arrays.asList(new AlarmControl(null)));
+		*/
+		ArrayList<Observer> lightArray = new ArrayList<>(Arrays.asList(controlFact.getControl("LIGHT", lightList)));
+		ArrayList<Observer> lockArray = new ArrayList<>(Arrays.asList(controlFact.getControl("LOCKING", lockList)));
+		ArrayList<Observer> tempArray = new ArrayList<>(Arrays.asList(controlFact.getControl("HEATING", heatingList)));
+		ArrayList<Observer> alarmArray = new ArrayList<>(Arrays.asList(controlFact.getControl("ALARM", alarmList)));
 		
 		//Creation of sensors
 		ArrayList<Observer> mergingList = new ArrayList<Observer>();
 		mergingList.addAll(lightArray);
 		mergingList.addAll(lockArray);
 		ArrayList<MovementSensor> movSensList = new ArrayList<MovementSensor>();
-		TemperatureSensor tempSens = new TemperatureSensor(10,kitchen, tempArray);
-		MovementSensor movSensKitchen = new MovementSensor(new Date(), kitchen, mergingList);
-		MovementSensor movSensHall = new MovementSensor(new Date(), hall, mergingList);
-		MovementSensor movSensGarage = new MovementSensor(new Date(), garage, mergingList);
-		SmokeSensor smokeSens = new SmokeSensor(alarmArray,kitchen);
+		TemperatureSensor tempSens = (TemperatureSensor) sensorFact.getSensor("TEMPERATURE", kitchen, tempArray);
+		MovementSensor movSensKitchen = (MovementSensor) sensorFact.getSensor("MOVEMENT", kitchen, mergingList);
+		MovementSensor movSensHall = (MovementSensor) sensorFact.getSensor("MOVEMENT", hall, mergingList);
+		MovementSensor movSensGarage = (MovementSensor) sensorFact.getSensor("MOVEMENT", garage, mergingList);
+		SmokeSensor smokeSens = (SmokeSensor) sensorFact.getSensor("SMOKE", kitchen, mergingList);
 		movSensList.add(movSensGarage);
 		movSensList.add(movSensHall);
 		movSensList.add(movSensKitchen);

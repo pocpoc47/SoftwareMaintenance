@@ -1,8 +1,26 @@
 package home;
-import java.util.ArrayList;
-import devices.*;
-import sensors.Sensor;
 
 public abstract class Room  {
 
+	private Door door;
+	
+	
+	public Room(){
+		
+	}
+
+
+	public Door getDoor() {
+		return door;
+	}
+
+
+	public void setDoor(Door door) {
+		this.door = door;
+	}
+
+
+
+
+	
 }

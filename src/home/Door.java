@@ -11,6 +11,7 @@ public class Door {
 	{
 		this.room = room;
 		this.doorName = doorName;
+		this.room.setDoor(this);
 	}
 	public Room getRoom()
 	{
