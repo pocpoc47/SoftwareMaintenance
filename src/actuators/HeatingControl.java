@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import devices.CentralHeating;
 import dto.Dto;
+import exceptions.VariabilityException;
 
 public class HeatingControl implements Observer {
 	
@@ -17,22 +18,31 @@ public class HeatingControl implements Observer {
 		this.desiredTemp = desiredTemp;
 	}
 
-	public void keepHouseTemp()
+	public boolean keepHouseTemp()
 	{
-		if(actualTemp<desiredTemp)
+		if(heaters!=null)
 		{
-			for(CentralHeating h : heaters)
+			if(actualTemp<desiredTemp)
 			{
-				h.turnOn();
+				for(CentralHeating h : heaters)
+				{
+					h.turnOn();
+				}
 			}
-		}
-		else
-		{
-			for(CentralHeating h : heaters)
+			else
 			{
-				h.turnOff();
+				for(CentralHeating h : heaters)
+				{
+					h.turnOff();
+				}
 			}
+			return true;
 		}
+		else {
+			System.out.println("No heaters\n");
+			return false;
+		}
+		
 	}
 
 	@Override

@@ -16,26 +16,49 @@ public class AlarmControl implements Observer {
 	{
 		this.alarmList = alarmList;
 	}
-	public void turnSmokeAlarmOn(Room room, Boolean isSmokeDetected)
+	public boolean setAlarmFireRing(Room room, Boolean isSmokeDetected)
 	{
-		for (Alarm alarm : alarmList)
-		{	
-			if(alarm.getRoom().equals(room))
-				//isSmokeDetected?alarm.turnOn():alarm.turnOff();
-				if(isSmokeDetected)
-					alarm.turnOn();
-				else
-					alarm.turnOff();
-		}
-	}
-	
-	public void turnSmokeAlarmOff(Room room)
-	{
-		for (Alarm alarm : alarmList)
+		Boolean roomFound = false;
+		if(alarmList != null)
 		{
-			if(alarm.getRoom().equals(room))	
-				alarm.turnOff();
+			for (Alarm alarm : alarmList)
+			{
+				if(alarm.getRoom().equals(room))
+					
+					if(isSmokeDetected)
+						alarm.turnOn();
+					else
+						alarm.turnOff();
+			}
+			if(!roomFound)
+			{
+				System.out.println("No alarm found for this room\n");
+				return false;
+			}
+			return true;
 		}
+		else
+		{
+			System.out.println("No alarm are referenced\n");
+			return false;
+		}	
+	}
+	public boolean setAlarm(boolean armed)
+	{
+		if(alarmList != null)
+		{
+			for (Alarm alarm : alarmList)
+			{
+				alarm.setArmed(armed);
+			}	
+			return true;
+		}
+		else
+		{
+			System.out.println("No alarm referenced\n");
+			return false;
+		}
+		
 	}
 
 	@Override
@@ -43,9 +66,9 @@ public class AlarmControl implements Observer {
 		switch(dto.getAction())
 		{
 			case Dto.SMOKE_DETECTION:
-				turnSmokeAlarmOn(dto.getRoom(),(boolean)dto.getData());
+				
+				setAlarmFireRing(dto.getRoom(),(boolean)dto.getData());
 				break;
 		}
-		
 	}
 }

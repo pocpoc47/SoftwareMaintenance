@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import actuators.Observer;
 import dto.Dto;
+import exceptions.SearchException;
+import exceptions.VariabilityException;
 import home.Room;
 
 public abstract class Sensor {
