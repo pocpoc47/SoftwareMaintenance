@@ -8,12 +8,17 @@
     "KITCHEN": [
       "LIGHT",
       "CENTRALHEATING",
+	  "ALARM",
       "LOCK"
     ],
     "HALL": [
       "LIGHT",
       "LIGHT",
       "ALARM",
+      "LOCK"
+    ],
+    "GARAGE": [
+      "LIGHT",
       "LOCK"
     ]
   },
@@ -28,6 +33,10 @@
       "MOVEMENT",
       "SMOKE",
       "TEMPERATURE",
+      "LOCK"
+    ],
+    "GARAGE": [
+      "MOVEMENT",
       "LOCK"
     ]
   },

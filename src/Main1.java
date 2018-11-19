@@ -30,6 +30,8 @@ public class Main1 {
 		Room kitchen = roomFact.getRoom("KITCHEN");
 		Room hall = roomFact.getRoom("HALL");
 		Room garage = roomFact.getRoom("GARAGE");
+		System.out.println(kitchen.getClass());
+		System.out.println("class home.kitchen");
 		
 		roomList.add(kitchen);
 		roomList.add(hall);

@@ -34,7 +34,6 @@ public class AlarmControl implements Observer {
 			if(!roomFound)
 			{
 				System.out.println("No alarm found for this room\n");
-				return false;
 			}
 			return true;
 		}

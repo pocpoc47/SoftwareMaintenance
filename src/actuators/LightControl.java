@@ -42,7 +42,6 @@ public class LightControl implements Observer {
 				else
 				{
 					System.out.println("No records of movement found for this room");
-					return false;
 				}
 			}
 		}
@@ -80,7 +79,7 @@ public class LightControl implements Observer {
 			{
 				if(l.getRoom().equals(room))
 				{
-					l.toggle();
+					l.turnOff();
 					foundRoom = true;
 				}	
 			}
@@ -101,6 +100,7 @@ public class LightControl implements Observer {
 	private void updateMovMap(Date lastMov, Room room)
 	{
 			movRoomMap.put(room, lastMov);
+			this.turnLights(true);
 	}
 	
 	@Override
