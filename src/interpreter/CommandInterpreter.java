@@ -44,16 +44,16 @@ public class CommandInterpreter {
 		switch(mode)
 		{
 			case GO_SLEEP:
-				if(((LightControl) actuatorList.get(0)).autoShutDown() &&
-				((LockingControl) actuatorList.get(1)).lockDoors() &&
-				((HeatingControl) actuatorList.get(2)).setDesiredTemp(19) &&
-				((AlarmControl) actuatorList.get(3)).setAlarm(true))
+				if(((AlarmControl) actuatorList.get(0)).setAlarm(true) &&
+				((HeatingControl) actuatorList.get(1)).setDesiredTemp(19) &&
+				((LightControl) actuatorList.get(2)).autoShutDown() &&
+				((LockingControl) actuatorList.get(3)).lockDoors())
 					return "Sleep Mode Enabled\n";
 				else
 					return "Check the error above.\n";
 			case WAKE_UP:
-				if(((HeatingControl) actuatorList.get(2)).setDesiredTemp(21)&&
-				((AlarmControl) actuatorList.get(3)).setAlarm(false))
+				if(((HeatingControl) actuatorList.get(1)).setDesiredTemp(21)&&
+				((AlarmControl) actuatorList.get(0)).setAlarm(false))
 				return "Wake Up Mode Enabled\n";
 			else
 				return "Check the error above.\n";

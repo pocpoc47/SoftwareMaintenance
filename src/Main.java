@@ -153,7 +153,6 @@ public class Main {
 			}
 		}
 		
-		//Test
 				//Il fait 10 degrés dans la maison et nous en voulont 15
 				heatingControl.setDesiredTemp(15);
 				System.out.println("DesiredTemp = 15");
