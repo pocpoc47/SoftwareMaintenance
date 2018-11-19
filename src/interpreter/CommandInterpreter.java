@@ -106,10 +106,8 @@ public class CommandInterpreter {
 			behaveOk = ((LockingControl) actuatorList.get(3)).unlock(roomList.get(room));
 		else
 			behaveOk = ((LockingControl) actuatorList.get(3)).lock(roomList.get(room));
-		if(behaveOk)
 		return "Door is now"+((open)?"opened\n":"closed\n");
-		else
-			return "Please check the error above\n";
+		
 	}
 	
 	@Command
