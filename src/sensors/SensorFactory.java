@@ -25,7 +25,7 @@ public class SensorFactory {
 			sensor = new LockSensor(observerList, false, room);
 			break;
 		case "MOVEMENT":
-			sensor = new MovementSensor(Date.from(Instant.now()), room, observerList);
+			sensor = new MovementSensor(null, room, observerList);
 			break;
 		case "SMOKE":
 			sensor = new SmokeSensor(observerList, room);

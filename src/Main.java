@@ -1,4 +1,5 @@
 import java.io.IOException;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -134,6 +135,7 @@ public class Main {
 					movSensorList.put(r,(MovementSensor)s);
 					s.registerObserver(lockingControl);
 					s.registerObserver(lightControl);
+					((MovementSensor)s).setLastMovementDetectedTime(Date.from(Instant.now()));
 					break;
 				case "TEMPERATURE":
 					tempSensorList.put(r,(TemperatureSensor)s);
