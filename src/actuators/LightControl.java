@@ -41,7 +41,7 @@ public class LightControl implements Observer {
 				}
 				else
 				{
-					System.out.println("No records of movement found for this room");
+					System.out.println("No records of movement found for the "+l.getRoom().getClass().getSimpleName()+"\n");
 				}
 			}
 		}
@@ -85,7 +85,7 @@ public class LightControl implements Observer {
 			}
 			if(!foundRoom) 
 			{
-				System.out.println("No light belonging to this room\");\n");
+				System.out.println("No light belonging to the"+room.getClass().getSimpleName()+"\n");
 				return false;
 			}
 		}

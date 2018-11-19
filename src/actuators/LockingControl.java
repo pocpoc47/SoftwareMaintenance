@@ -40,7 +40,7 @@ public class LockingControl implements Observer {
 				if(!lock.isLocked())
 				{
 					if(lastMov == null) {
-						System.out.println("No records about the movement in this room\n");
+						System.out.println("No records of movement found for the "+lock.getRoom().getClass().getSimpleName()+"\n");
 					}
 					else
 					{
