@@ -65,17 +65,17 @@ public class CommandInterpreter {
 	@Command
 	public String armAlarm()
 	{
-		return ((AlarmControl) actuatorList.get(4)).setAlarm(true) ? "the alarm is now armed\n" : "Please check the error above.\n";
+		return ((AlarmControl) actuatorList.get(0)).setAlarm(true) ? "the alarm is now armed\n" : "Please check the error above.\n";
 	}
 	@Command
 	public String disarmAlarm()
 	{
-		return ((AlarmControl) actuatorList.get(4)).setAlarm(false) ? "the alarm is now disarmed\n " : "Please check the error above.\n";
+		return ((AlarmControl) actuatorList.get(0)).setAlarm(false) ? "the alarm is now disarmed\n " : "Please check the error above.\n";
 	}
 	@Command
 	public String setLight(boolean lightOn)
 	{
-		if(((LightControl) actuatorList.get(0)).turnLights(lightOn))
+		if(((LightControl) actuatorList.get(2)).turnLights(lightOn))
 		return "Lights are now "+((lightOn)?"enabled\n":"unabled\n");
 		else
 			return "Please check the error above.\n";
@@ -90,7 +90,7 @@ public class CommandInterpreter {
 		}
 		else
 		{
-			if(((LightControl) actuatorList.get(0)).turnLights(lightOn, roomList.get(room)))
+			if(((LightControl) actuatorList.get(2)).turnLights(lightOn, roomList.get(room)))
 			return "Lights are now "+((lightOn)?"enabled":"unabled")+"in the "+room+"\n";
 			else
 				return "Please check the error above.\n";
@@ -103,9 +103,9 @@ public class CommandInterpreter {
 	{
 		boolean behaveOk = false;
 		if(open)
-			behaveOk = ((LockingControl) actuatorList.get(1)).unlock(roomList.get(room));
+			behaveOk = ((LockingControl) actuatorList.get(3)).unlock(roomList.get(room));
 		else
-			behaveOk = ((LockingControl) actuatorList.get(1)).lock(roomList.get(room));
+			behaveOk = ((LockingControl) actuatorList.get(3)).lock(roomList.get(room));
 		if(behaveOk)
 		return "Door is now"+((open)?"opened\n":"closed\n");
 		else
