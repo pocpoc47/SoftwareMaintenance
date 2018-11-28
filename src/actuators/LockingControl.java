@@ -20,15 +20,25 @@ public class LockingControl implements Observer {
 	
 	private ArrayList<Lock> lockList;
 	private Map<Room,Date> movRoomMap;
+	public static LockingControl instance;
 	
 	public LockingControl()
 	{
 		movRoomMap = new HashMap<Room,Date>();
 		this.lockList = new ArrayList<Lock>();
 	}
+	
+	public static LockingControl getInstance() {
+		if(instance == null) {
+			instance = new LockingControl();
+		}
+		return instance;
+	}
+	
 	public void addDevice(DeviceInterface device) {
 		this.lockList.add((Lock)device);
 	}
+	
 	public boolean lockDoors()
 	{
 		if(lockList!=null)
