@@ -41,16 +41,16 @@ public class CommandInterpreter {
 		switch(mode)
 		{
 			case GO_SLEEP:
-				if(((AlarmControl) actuatorList.get(0)).setAlarm(true) &&
-				((HeatingControl) actuatorList.get(1)).setDesiredTemp(19) &&
-				((LightControl) actuatorList.get(2)).autoShutDown() &&
-				((LockingControl) actuatorList.get(3)).lockDoors())
+				if(AlarmControl.getInstance().setAlarm(true) &&
+				HeatingControl.getInstance().setDesiredTemp(19) &&
+				LightControl.getInstance().autoShutDown() &&
+				LockingControl.getInstance().lockDoors())
 					return "Sleep Mode Enabled\n";
 				else
 					return "Check the error above.\n";
 			case WAKE_UP:
-				if(((HeatingControl) actuatorList.get(1)).setDesiredTemp(21)&&
-				((AlarmControl) actuatorList.get(0)).setAlarm(false))
+				if(HeatingControl.getInstance().setDesiredTemp(21)&&
+				AlarmControl.getInstance().setAlarm(false))
 				return "Wake Up Mode Enabled\n";
 			else
 				return "Check the error above.\n";
@@ -62,17 +62,17 @@ public class CommandInterpreter {
 	@Command
 	public String armAlarm()
 	{
-		return ((AlarmControl) actuatorList.get(0)).setAlarm(true) ? "the alarm is now armed\n" : "Please check the error above.\n";
+		return AlarmControl.getInstance().setAlarm(true) ? "the alarm is now armed\n" : "Please check the error above.\n";
 	}
 	@Command
 	public String disarmAlarm()
 	{
-		return ((AlarmControl) actuatorList.get(0)).setAlarm(false) ? "the alarm is now disarmed\n " : "Please check the error above.\n";
+		return AlarmControl.getInstance().setAlarm(false) ? "the alarm is now disarmed\n " : "Please check the error above.\n";
 	}
 	@Command
 	public String setLight(boolean lightOn)
 	{
-		if(((LightControl) actuatorList.get(2)).turnLights(lightOn))
+		if(LightControl.getInstance().turnLights(lightOn))
 		return "Lights are now "+((lightOn)?"enabled\n":"unabled\n");
 		else
 			return "Please check the error above.\n";
@@ -87,7 +87,7 @@ public class CommandInterpreter {
 		}
 		else
 		{
-			if(((LightControl) actuatorList.get(2)).turnLights(lightOn, roomList.get(room)))
+			if(LightControl.getInstance().turnLights(lightOn, roomList.get(room)))
 			return "Lights are now "+((lightOn)?"enabled":"unabled")+"in the "+room+"\n";
 			else
 				return "Please check the error above.\n";
@@ -100,10 +100,14 @@ public class CommandInterpreter {
 	{
 		boolean behaveOk = false;
 		if(open)
-			behaveOk = ((LockingControl) actuatorList.get(3)).unlock(roomList.get(room));
+			behaveOk = LockingControl.getInstance().unlock(roomList.get(room));
 		else
-			behaveOk = ((LockingControl) actuatorList.get(3)).lock(roomList.get(room));
-		return "Door is now"+((open)?"opened\n":"closed\n");
+			behaveOk = LockingControl.getInstance().lock(roomList.get(room));
+		
+		if(behaveOk)
+			return "Door is now"+((open)?"opened\n":"closed\n");
+		else
+			return "Check the error above.\n";
 		
 	}
 	
