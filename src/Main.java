@@ -61,17 +61,6 @@ public class Main {
 		ArrayList<DeviceInterface> deviceList = new ArrayList<DeviceInterface>();
 		ArrayList<Sensor> sensorList = new ArrayList<Sensor>();
 		
-		AlarmControl alarmControl = new AlarmControl(null);
-		HeatingControl heatingControl = new HeatingControl(null, 0);
-		LightControl lightControl = new LightControl(null);
-		LockingControl lockingControl = new LockingControl(null);
-
-		ArrayList<Observer> controls = new ArrayList<Observer>();
-		controls.add(alarmControl);
-		controls.add(heatingControl);
-		controls.add(lightControl);
-		controls.add(lockingControl);
-		
 		HashMap<Room, MovementSensor> movSensorList = new HashMap<Room, MovementSensor>();
 		HashMap<Room, TemperatureSensor> tempSensorList = new HashMap<Room, TemperatureSensor>();
 		HashMap<Room, SmokeSensor> smokeSensorList = new HashMap<Room, SmokeSensor>();
@@ -99,15 +88,15 @@ public class Main {
 				deviceList.add(d);
 				switch (device) {
 				case "ALARM":
-					alarmControl.addDevice(d);
+					AlarmControl.getInstance().addDevice(d);
 					alarmMap.put(r,(Alarm)d);
 					break;
 				case "CENTRALHEATING":
-					heatingControl.addDevice(d);
+					HeatingControl.getInstance().addDevice(d);
 					heatingMap.put(r,(CentralHeating)d);
 					break;
 				case "LIGHT":
-					lightControl.addDevice(d);
+					LightControl.getInstance().addDevice(d);
 					if(lightMap.containsKey(r)) {
 						lightMap.get(r).add((Light)d);
 					}else {
@@ -115,7 +104,7 @@ public class Main {
 					}
 					break;
 				case "LOCK":
-					lockingControl.addDevice(d);
+					LockingControl.getInstance().addDevice(d);
 					if(lockMap.containsKey(r)) {
 						lockMap.get(r).add((Lock)d);
 					}else {
@@ -133,21 +122,21 @@ public class Main {
 				switch (sensor) {
 				case "MOVEMENT":
 					movSensorList.put(r,(MovementSensor)s);
-					s.registerObserver(lockingControl);
-					s.registerObserver(lightControl);
+					s.registerObserver(LockingControl.getInstance());
+					s.registerObserver(LightControl.getInstance());
 					((MovementSensor)s).setLastMovementDetectedTime(Date.from(Instant.now()));
 					break;
 				case "TEMPERATURE":
 					tempSensorList.put(r,(TemperatureSensor)s);
-					s.registerObserver(heatingControl);
+					s.registerObserver(HeatingControl.getInstance());
 					break;
 				case "SMOKE":
 					smokeSensorList.put(r,(SmokeSensor)s);
-					s.registerObserver(alarmControl);
+					s.registerObserver(AlarmControl.getInstance());
 					break;
 				case "LOCK":
 					lockSensorList.put(r,(LockSensor)s);
-					s.registerObserver(lockingControl);
+					s.registerObserver(LockingControl.getInstance());
 					break;
 				default:
 					break;
@@ -156,7 +145,7 @@ public class Main {
 		}
 		
 				//Il fait 10 degrés dans la maison et nous en voulont 15
-				heatingControl.setDesiredTemp(15);
+				HeatingControl.getInstance().setDesiredTemp(15);
 				System.out.println("DesiredTemp = 15");
 				tempSensorList.get(kitchen).setTemp(10);
 				System.out.println("Is central heating turned on in kitchen? "+heatingMap.get(kitchen).isTurnedOn()+ " - Actual temp : "+(heatingControl.getActualTemp()));
@@ -164,12 +153,12 @@ public class Main {
 				System.out.println("Is central heating turned on in the kitchen? "+heatingMap.get(kitchen).isTurnedOn()+ " - Actual temp : "+(heatingControl.getActualTemp()+"\n"));
 				
 				//La lumière est allumée et elle doit s'éteindre automatiquement.
-				lightControl.turnLights(false, kitchen);
+				LightControl.getInstance().turnLights(false, kitchen);
 				System.out.println("Is light on in the kitchen? : "+lightMap.get(kitchen).get(0).isTurnedOn());
 				movSensorList.get(kitchen).setLastMovementDetectedTime(new Date(System.currentTimeMillis()));
 				System.out.println("Mouvement detecté ! Is light on ? : "+lightMap.get(kitchen).get(0).isTurnedOn());
 				movSensorList.get(kitchen).setLastMovementDetectedTime(new Date(System.currentTimeMillis()-1000000));
-				lightControl.autoShutDown();// Plus de mouvement depuis un bon bout de temps (forcer une valeur antérieure pour ne pas attendre)
+				LightControl.getInstance().autoShutDown();// Plus de mouvement depuis un bon bout de temps (forcer une valeur antérieure pour ne pas attendre)
 				System.out.println("Plus de mouvement : Is light on ? : "+lightMap.get(kitchen).get(0).isTurnedOn()+"\n");
 				
 				//Les portes sont ouvertes et doivent se fermer.
@@ -178,7 +167,7 @@ public class Main {
 				System.out.println("Plus de mouvement : are doors closed ?");
 				movSensorList.get(garage).setLastMovementDetectedTime(new Date(System.currentTimeMillis()-1000000));
 				
-				lockingControl.lockDoors();
+				LockingControl.getInstance().lockDoors();
 				System.out.println("GarageDoor locked?: "+lockMap.get(garage).get(0).isLocked());
 				System.out.println("EntranceDoor locked?: "+lockMap.get(garage).get(0).isLocked()+"\n");
 				
@@ -189,7 +178,7 @@ public class Main {
 				smokeSensorList.get(kitchen).setSmokeDetected(false);
 				System.out.println("Feu éteint,alarme déclanchée? "+alarmMap.get(kitchen).isAlarmOn());
 				try {
-					ShellFactory.createConsoleShell("HouseInterpreter", "Use \'?list\' to look at commands.", new CommandInterpreter(roomList, controls)).commandLoop();
+					ShellFactory.createConsoleShell("HouseInterpreter", "Use \'?list\' to look at commands.", new CommandInterpreter(roomList)).commandLoop();
 				}
 				catch (IOException e) {
 					e.printStackTrace();

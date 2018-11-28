@@ -15,15 +15,12 @@ import home.Room;
 public class CommandInterpreter {
 	
 	private ArrayList<Room> roomList;
-	private ArrayList<Observer> actuatorList;
-	
 	public static final int GO_SLEEP = 1;
 	public static final int WAKE_UP = 2;
 	
-	public CommandInterpreter(ArrayList<Room> roomList,  ArrayList<Observer> actuatorList)
+	public CommandInterpreter(ArrayList<Room> roomList)
 	{
 		this.roomList = roomList;
-		this.actuatorList = actuatorList;
 	}
 	@Command
 	public String printHelp()
