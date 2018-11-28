@@ -1,6 +1,5 @@
 package devices;
 
-import home.Kitchen;
 import home.Room;
 
 public class CentralHeating implements DeviceInterface{
@@ -20,11 +19,7 @@ public class CentralHeating implements DeviceInterface{
 		return turnedOn;
 	}
 
-	public void setTurnedOn(boolean turnedOn) {
-		this.turnedOn = turnedOn;
-	}
-
-	@Override
+		@Override
 	public void turnOn() {
 		this.turnedOn = true;
 	}

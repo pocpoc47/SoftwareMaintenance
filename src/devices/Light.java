@@ -8,8 +8,7 @@ public class Light implements DeviceInterface {
 	private boolean turnedOn;
 	private Room room;
 	
-	public Light(boolean isTurnedOn, Room room)
-	{
+	public Light(boolean isTurnedOn, Room room) {
 		this.turnedOn = isTurnedOn;
 		this.room = room;
 	}

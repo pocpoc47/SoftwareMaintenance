@@ -8,14 +8,12 @@ public class Lock implements DeviceInterface {
 	private boolean locked;
 	private Room room;
 	
-	public Lock(boolean locked, Room room)
-	{
+	public Lock(boolean locked, Room room) {
 		this.locked = locked;
 		this.room = room;
 	}
 	
-	public boolean isLocked()
-	{
+	public boolean isLocked() {
 		return locked;
 	}
 	@Override
@@ -35,8 +33,7 @@ public class Lock implements DeviceInterface {
 		this.locked = !this.locked;
 	}
 	
-	public Room getRoom()
-	{
+	public Room getRoom() {
 		return room;
 	}
 

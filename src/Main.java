@@ -61,10 +61,10 @@ public class Main {
 		ArrayList<DeviceInterface> deviceList = new ArrayList<DeviceInterface>();
 		ArrayList<Sensor> sensorList = new ArrayList<Sensor>();
 		
-		AlarmControl alarmControl = new AlarmControl(null);
-		HeatingControl heatingControl = new HeatingControl(null, 0);
-		LightControl lightControl = new LightControl(null);
-		LockingControl lockingControl = new LockingControl(null);
+		AlarmControl alarmControl = AlarmControl.getInstance();
+		HeatingControl heatingControl = HeatingControl.getInstance();
+		LightControl lightControl = LightControl.getInstance();
+		LockingControl lockingControl = LockingControl.getInstance();
 
 		ArrayList<Observer> controls = new ArrayList<Observer>();
 		controls.add(alarmControl);
