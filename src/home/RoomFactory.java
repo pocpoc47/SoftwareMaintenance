@@ -16,6 +16,18 @@ public class RoomFactory {
 		case "GARAGE":
 			room = new Garage();
 			break;
+		case "BATHROOM":
+			room = new BathRoom();
+			break;
+		case "GARDEN":
+			room = new Garden();
+			break;
+		case "LIVINGROOM":
+			room = new LivingRoom();
+			break;
+		case "DININGROOM":
+			room = new DiningRoom();
+			break;
 		default:
 			System.out.println("UNKNOWN TYPE: " + type);
 			break;

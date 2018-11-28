@@ -11,12 +11,22 @@ import home.Room;
 
 public class AlarmControl implements Observer {
 	
+	private static AlarmControl instance;
+	
 	private ArrayList<Alarm> alarmList;
 	
 	public AlarmControl(ArrayList<Alarm> alarmList)
 	{
 		this.alarmList = alarmList;
 	}
+	
+	public static AlarmControl getInstance() {
+		if(instance == null) {
+			instance = new AlarmControl(null);
+		}
+		return instance;
+	}
+	
 	public boolean setAlarmFireRing(Room room, Boolean isSmokeDetected)
 	{
 		Boolean roomFound = false;
