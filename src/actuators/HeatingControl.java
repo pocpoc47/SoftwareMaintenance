@@ -13,14 +13,22 @@ public class HeatingControl implements Observer {
 	private double desiredTemp;
 	private double actualTemp;
 	private ArrayList <CentralHeating> heaters;
+	public static HeatingControl instance;
 	
-	public HeatingControl(ArrayList<CentralHeating> heaters, double desiredTemp)
+	public HeatingControl()
 	{
-		this.heaters = heaters;
-		this.desiredTemp = desiredTemp;
+		this.heaters = new ArrayList<CentralHeating>();
+		this.desiredTemp = 20;
 	}
+	
+	public static HeatingControl getInstance() {
+		if(instance == null) {
+			instance = new HeatingControl();
+		}
+		return instance;
+	}
+	
 	public void addDevice(DeviceInterface device) {
-		if(this.heaters == null) this.heaters = new ArrayList<CentralHeating>();
 		this.heaters.add((CentralHeating)device);
 	}
 	public boolean keepHouseTemp()

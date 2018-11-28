@@ -15,14 +15,20 @@ public class LightControl implements Observer {
 		
 	private ArrayList<Light> lightList;
 	private Map<Room,Date> movRoomMap;
+	public static LightControl instance;
 	
-	public LightControl(ArrayList<Light> lightList)
+	public LightControl()
 	{
-		this.lightList = lightList;
 		movRoomMap = new HashMap<Room,Date>();
+		this.lightList = new ArrayList<Light>();
+	}
+	public static LightControl getInstance() {
+		if(instance == null) {
+			instance = new LightControl();
+		}
+		return instance;
 	}
 	public void addDevice(DeviceInterface device) {
-		if(this.lightList == null) this.lightList = new ArrayList<Light>();
 		this.lightList.add((Light)device);
 	}
 	public boolean autoShutDown()

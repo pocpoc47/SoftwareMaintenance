@@ -15,14 +15,14 @@ public class AlarmControl implements Observer {
 	
 	private ArrayList<Alarm> alarmList;
 	
-	public AlarmControl(ArrayList<Alarm> alarmList)
+	public AlarmControl()
 	{
-		this.alarmList = alarmList;
+		this.alarmList = new ArrayList<Alarm>();
 	}
 	
 	public static AlarmControl getInstance() {
 		if(instance == null) {
-			instance = new AlarmControl(null);
+			instance = new AlarmControl();
 		}
 		return instance;
 	}
@@ -72,7 +72,6 @@ public class AlarmControl implements Observer {
 	}
 	
 	public void addDevice(DeviceInterface device) {
-		if(this.alarmList == null) this.alarmList = new ArrayList<Alarm>();
 		this.alarmList.add((Alarm)device);
 	}
 	

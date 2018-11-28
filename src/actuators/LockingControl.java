@@ -21,13 +21,12 @@ public class LockingControl implements Observer {
 	private ArrayList<Lock> lockList;
 	private Map<Room,Date> movRoomMap;
 	
-	public LockingControl(ArrayList<Lock> lockList)
+	public LockingControl()
 	{
-		this.lockList = lockList;
 		movRoomMap = new HashMap<Room,Date>();
+		this.lockList = new ArrayList<Lock>();
 	}
 	public void addDevice(DeviceInterface device) {
-		if(this.lockList == null) this.lockList = new ArrayList<Lock>();
 		this.lockList.add((Lock)device);
 	}
 	public boolean lockDoors()
