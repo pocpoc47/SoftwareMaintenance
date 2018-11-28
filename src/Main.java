@@ -60,11 +60,7 @@ public class Main {
 		ArrayList<Room> roomList = new ArrayList<Room>();
 		ArrayList<DeviceInterface> deviceList = new ArrayList<DeviceInterface>();
 		ArrayList<Sensor> sensorList = new ArrayList<Sensor>();
-		
-		AlarmControl alarmControl = AlarmControl.getInstance();
-		HeatingControl heatingControl = HeatingControl.getInstance();
-		LightControl lightControl = LightControl.getInstance();
-		LockingControl lockingControl = LockingControl.getInstance();
+
 
 		
 		HashMap<Room, MovementSensor> movSensorList = new HashMap<Room, MovementSensor>();
@@ -154,9 +150,9 @@ public class Main {
 				HeatingControl.getInstance().setDesiredTemp(15);
 				System.out.println("DesiredTemp = 15");
 				tempSensorList.get(kitchen).setTemp(10);
-				System.out.println("Is central heating turned on in kitchen? "+heatingMap.get(kitchen).isTurnedOn()+ " - Actual temp : "+(heatingControl.getActualTemp()));
+				System.out.println("Is central heating turned on in kitchen? "+heatingMap.get(kitchen).isTurnedOn()+ " - Actual temp : "+(HeatingControl.getInstance().getActualTemp()));
 				tempSensorList.get(kitchen).setTemp(15.4);
-				System.out.println("Is central heating turned on in the kitchen? "+heatingMap.get(kitchen).isTurnedOn()+ " - Actual temp : "+(heatingControl.getActualTemp()+"\n"));
+				System.out.println("Is central heating turned on in the kitchen? "+heatingMap.get(kitchen).isTurnedOn()+ " - Actual temp : "+(HeatingControl.getInstance().getActualTemp()+"\n"));
 				
 				//La lumière est allumée et elle doit s'éteindre automatiquement.
 				LightControl.getInstance().turnLights(false, kitchen);
