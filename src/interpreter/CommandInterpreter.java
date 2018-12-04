@@ -8,7 +8,14 @@ import actuators.LightControl;
 import actuators.LockingControl;
 import actuators.Observer;
 import asg.cliche.Command;
+import devices.Alarm;
+import devices.CentralHeating;
+import devices.Light;
+import devices.Lock;
 import home.Room;
+import sensors.MovementSensor;
+import sensors.SmokeSensor;
+import sensors.TemperatureSensor;
 
 //One improvement for next release : 
 //We should add a string label to the door, to the room and pass the from the main to the interpreter so we can list them.
@@ -17,6 +24,11 @@ public class CommandInterpreter {
 	private ArrayList<Room> roomList;
 	public static final int GO_SLEEP = 1;
 	public static final int WAKE_UP = 2;
+	
+	ArrayList<MovementSensor> movList;
+	ArrayList<SmokeSensor> smokeSensList;
+	ArrayList<TemperatureSensor> tempSensorList;
+	
 	
 	public CommandInterpreter(ArrayList<Room> roomList)
 	{
@@ -114,6 +126,26 @@ public class CommandInterpreter {
 	@Command
 	public void currentState()
 	{
-		
+		ArrayList<Lock> locks = LockingControl.getInstance().getLocks();
+		ArrayList<Light> lights = LightControl.getInstance().getLights();
+		ArrayList<CentralHeating> heaters = HeatingControl.getInstance().getHeaters();
+		ArrayList<Alarm> alarms = AlarmControl.getInstance().getAlarmList();
+		for(Lock lock : locks)
+		{
+			//see if OpenDoors in room and update ux
+		}
+		for(Light light : lights)
+		{
+			//verify that all lights are either on or off for a same room.
+			//update ux for each room
+		}
+		for(CentralHeating h : heaters)
+		{
+			//See if heaters and on or off, and update them in the ux
+		}
+		for(Alarm a : alarms)
+		{
+			//See if the alarms are triggered and then trigger them in the ux
+		}	
 	}
 }

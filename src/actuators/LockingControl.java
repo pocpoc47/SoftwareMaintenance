@@ -155,7 +155,10 @@ public class LockingControl implements Observer {
 	{
 			movRoomMap.put(room, lastMov);
 	}
-	
+	public ArrayList<Lock> getLocks()
+	{
+		return this.lockList;
+	}
 	@Override
 	public void update(Dto dto)  {
 		switch(dto.getAction())

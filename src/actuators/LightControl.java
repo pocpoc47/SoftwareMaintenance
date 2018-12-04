@@ -109,6 +109,11 @@ public class LightControl implements Observer {
 			this.turnLights(true);
 	}
 	
+	public ArrayList<Light> getLights()
+	{
+		return this.lightList;
+	}
+	
 	@Override
 	public void update(Dto dto) {
 		switch(dto.getAction())

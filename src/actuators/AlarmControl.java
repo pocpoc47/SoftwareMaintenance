@@ -75,6 +75,10 @@ public class AlarmControl implements Observer {
 		this.alarmList.add((Alarm)device);
 	}
 	
+	public ArrayList<Alarm> getAlarmList() {
+		return alarmList;
+	}
+
 	@Override
 	public void update(Dto dto) {
 		switch(dto.getAction())

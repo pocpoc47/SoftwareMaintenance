@@ -9,7 +9,7 @@ import devices.Light;
 import devices.Lock;
 
 public class ControlFactory {
-	public <E> Observer getControl(String type, ArrayList<E> deviceList) {
+	/*public <E> Observer getControl(String type, ArrayList<E> deviceList) {
 		Observer control = null;
 		switch (type) {
 		case "ALARM":
@@ -30,5 +30,5 @@ public class ControlFactory {
 			break;
 		}
 		return control;
-	}
+	}*/
 }

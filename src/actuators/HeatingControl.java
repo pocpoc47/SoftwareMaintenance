@@ -82,5 +82,9 @@ public class HeatingControl implements Observer {
 		return actualTemp;
 	}
 
+	public ArrayList<CentralHeating> getHeaters() {
+		return heaters;
+	}
+	
 	
 }
